@@ -1,6 +1,9 @@
+// Se importan dependencias de navigation
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
+// Se importan las ventanas necesarias
 import LoginScreen from './LoginScreen';
 import RegisterScreen from './RegisterScreen';
 import VerificationScreen from './VerificationScreen';
@@ -12,12 +15,13 @@ import StoreScreen from './StoreScreen';
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
-function MenuScreens() {
+function AuthStack() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Mis Ligas" component={MyLeaguesScreen} />
-      <Stack.Screen name="Mi Perfil" component={ProfileScreen} />
-      <Stack.Screen name="Tienda" component={StoreScreen} />
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+      <Stack.Screen name="Verification" component={VerificationScreen} />
     </Stack.Navigator>
   );
 }
@@ -25,16 +29,20 @@ function MenuScreens() {
 function Navigation() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Login">
-        <Drawer.Screen name="Login" component={LoginScreen} />
-        <Drawer.Screen name="Register" component={RegisterScreen} />
-        <Drawer.Screen name="Verification" component={VerificationScreen} />
-        <Drawer.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
-        <Drawer.Screen name="Menu" component={MenuScreens} />
+      <Drawer.Navigator initialRouteName="AuthStack">
+        <Drawer.Screen
+          name="Bienvenido!"
+          component={AuthStack}
+          options={{
+            drawerLabel: () => null, // Oculta el label de AuthStack dentro del menu
+          }}
+        />
+        <Drawer.Screen name="Mis Ligas" component={MyLeaguesScreen} />
+        <Drawer.Screen name="Mi Perfil" component={ProfileScreen} />
+        <Drawer.Screen name="Tienda" component={StoreScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
 }
 
 export default Navigation;
-

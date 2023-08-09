@@ -3,10 +3,13 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, TouchableWi
 import { authenticateUser } from './AuthenticationTest';
 
 function LoginScreen({ navigation }) {
+
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const isAuthenticated = authenticateUser(email, password);
+
 
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -45,7 +48,7 @@ function LoginScreen({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
+     <View style={styles.container}>
         <Text style={styles.logo}>SevenPlus</Text>
         <TextInput
           style={styles.input}
