@@ -23,7 +23,7 @@ function Navigation() {
       <NavigationContainer>
       <Drawer.Navigator initialRouteName="Bienvenido">
         <Drawer.Screen name="Bienvenido" component={AuthStack} options={{
-              drawerLabel: () => null,}} />
+              drawerLabel: () => null}} />
           <Drawer.Screen name="Mis Ligas" component={MyLeaguesScreen} />
           <Drawer.Screen name="Mi Perfil" component={ProfileScreen} />
           <Drawer.Screen name="Tienda" component={StoreScreen} />

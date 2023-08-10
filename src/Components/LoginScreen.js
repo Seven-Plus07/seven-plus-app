@@ -43,9 +43,6 @@ function LoginScreen({ navigation }) {
     setErrorMessage('');
   };
 
-  const handleForgotPassword = () => {
-    navigation.navigate('ForgotPassword'); // Navegar a la pantalla de restablecimiento de contraseña
-  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -73,10 +70,10 @@ function LoginScreen({ navigation }) {
         <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
           <Text style={styles.loginText}>Iniciar sesión</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.registerButton}  onPress={() => navigation.navigate('AuthStack', { screen: 'Register' })}>
+        <TouchableOpacity style={styles.registerButton} onPress={() => navigation.navigate('Register')}>
           <Text style={styles.registerText}>Registrarse</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.forgotPasswordButton} onPress={handleForgotPassword}>
+        <TouchableOpacity style={styles.forgotPasswordButton} onPress={() => navigation.navigate('Register')}>
           <Text style={styles.forgotPasswordText}>¿Olvidaste tu contraseña?</Text>
         </TouchableOpacity>
 
