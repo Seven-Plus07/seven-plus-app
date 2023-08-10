@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 
-function ForgotPasswordScreen({ navigation }) {
+function ForgotPasswordScreen({ AuthStack }) {
   const [email, setEmail] = useState('');
 
   const handleForgotPassword = () => {
