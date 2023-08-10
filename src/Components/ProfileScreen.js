@@ -17,10 +17,6 @@ function ProfileScreen() {
     console.log('Alias:', alias);
   };
 
-  const handleLogout = () => {
-    // Lógica para cerrar sesión, como limpiar el token de autenticación y redirigir a la pantalla de inicio de sesión
-    console.log('Cerrando sesión...');
-  };
 
   return (
     <View style={styles.container}>
@@ -51,9 +47,6 @@ function ProfileScreen() {
       />
       <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
         <Text style={styles.saveButtonText}>Guardar Cambios</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-        <Text style={styles.logoutButtonText}>Cerrar Sesión</Text>
       </TouchableOpacity>
     </View>
   );
@@ -91,21 +84,6 @@ const styles = StyleSheet.create({
   },
   saveButtonText: {
     color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  logoutButton: {
-    width: '80%',
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: 'blue',
-    marginBottom: 16,
-  },
-  logoutButtonText: {
-    color: 'blue',
     fontSize: 18,
     fontWeight: 'bold',
   },

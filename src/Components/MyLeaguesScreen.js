@@ -51,25 +51,25 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   headerText: {
-    fontSize: 12,
+    fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 8,
   },
   subHeaderText: {
-    fontSize: 16,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 24,
+    marginBottom: 20,
   },
   imageContainer: {
     alignItems: 'center',
   },
   image: {
-    width: 200,
-    height: 200,
-    marginBottom: 16,
+    width: 600,
+    height: 600,
+    marginBottom: 2,
   },
   inscribirseButton: {
-    backgroundColor: 'blue',
+    backgroundColor: '#FD2525',
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 4,
@@ -77,6 +77,9 @@ const styles = StyleSheet.create({
   inscribirseButtonText: {
     color: 'white',
     fontWeight: 'bold',
+    fontSize: 18,
+
+
   },
 });
 

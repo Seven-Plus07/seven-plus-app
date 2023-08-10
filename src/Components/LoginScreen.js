@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { authenticateUser } from './AuthenticationTest';
+import spImage from 'SevenPlusAppTfm/assets/sp.png';
 
 function LoginScreen({ navigation }) {
 
@@ -49,7 +50,9 @@ function LoginScreen({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
      <View style={styles.container}>
-        <Text style={styles.logo}>SevenPlus</Text>
+        <Image source={spImage} style={styles.image}
+
+        />
         <TextInput
           style={styles.input}
           placeholder="Correo electrónico"
@@ -70,7 +73,7 @@ function LoginScreen({ navigation }) {
         <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
           <Text style={styles.loginText}>Iniciar sesión</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.registerButton} onPress={() => navigation.navigate('Register')}>
+        <TouchableOpacity style={styles.registerButton}  onPress={() => navigation.navigate('AuthStack', { screen: 'Register' })}>
           <Text style={styles.registerText}>Registrarse</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.forgotPasswordButton} onPress={handleForgotPassword}>
@@ -89,10 +92,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
   },
-  logo: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 16,
+  image: {
+    width: 300, // Ajusta el tamaño de la imagen según tus necesidades
+    height: 300, // Ajusta el tamaño de la imagen según tus necesidades
+    marginBottom: 2,
   },
   input: {
     width: '80%',
@@ -100,7 +103,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 8,
-    marginBottom: 16,
+    marginBottom: 12,
     paddingHorizontal: 12,
   },
   loginButton: {

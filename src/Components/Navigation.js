@@ -1,48 +1,41 @@
 // Se importan dependencias de navigation
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { Provider } from 'react-redux';
+import AuthStack from './AuthStack'; // Importa tu AuthStack aquí
 
 // Se importan las ventanas necesarias
-import LoginScreen from './LoginScreen';
-import RegisterScreen from './RegisterScreen';
-import VerificationScreen from './VerificationScreen';
-import ForgotPasswordScreen from './ForgotPasswordScreen';
 import MyLeaguesScreen from './MyLeaguesScreen';
 import ProfileScreen from './ProfileScreen';
 import StoreScreen from './StoreScreen';
+import store from './Store'; // Importa el store de Redux
+import SubscriptionScreen from './SubscriptionScreen'; // Importa la pantalla SubscriptionScreen
+import InvitationScreen from './InvitationScreen';
+import SettingsScreen from './SettingsScreen';
+
 
 const Drawer = createDrawerNavigator();
-const Stack = createStackNavigator();
-
-function AuthStack() {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Register" component={RegisterScreen} />
-      <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
-      <Stack.Screen name="Verification" component={VerificationScreen} />
-    </Stack.Navigator>
-  );
-}
 
 function Navigation() {
   return (
-    <NavigationContainer>
-      <Drawer.Navigator initialRouteName="AuthStack">
-        <Drawer.Screen
-          name="Bienvenido!"
-          component={AuthStack}
-          options={{
-            drawerLabel: () => null, // Oculta el label de AuthStack dentro del menu
-          }}
-        />
-        <Drawer.Screen name="Mis Ligas" component={MyLeaguesScreen} />
-        <Drawer.Screen name="Mi Perfil" component={ProfileScreen} />
-        <Drawer.Screen name="Tienda" component={StoreScreen} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    // Envuelve el componente NavigationContainer con el Provider de Redux y utiliza el store
+    <Provider store={store}>
+      <NavigationContainer>
+      <Drawer.Navigator initialRouteName="Bienvenido">
+        <Drawer.Screen name="Bienvenido" component={AuthStack} options={{
+              drawerLabel: () => null,}} />
+          <Drawer.Screen name="Mis Ligas" component={MyLeaguesScreen} />
+          <Drawer.Screen name="Mi Perfil" component={ProfileScreen} />
+          <Drawer.Screen name="Tienda" component={StoreScreen} />
+          <Drawer.Screen name="Invitar amigos" component={InvitationScreen} />
+          <Drawer.Screen name="Configuración" component={SettingsScreen} />
+          <Drawer.Screen name="Subscription" component={SubscriptionScreen} options={{
+              drawerLabel: () => null,}} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
 export default Navigation;
+

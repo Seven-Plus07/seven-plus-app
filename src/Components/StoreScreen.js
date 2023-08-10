@@ -1,14 +1,80 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { connect } from 'react-redux'; // Importa connect de React Redux
+import { setSubscription } from './Store';
 
-const StoreScreen = () => {
+const StoreScreen = ({ navigation, subscription, dispatch }) => {
+  const handleSubscription = (subscriptionType) => {
+    // Dispatch de la acción para actualizar la suscripción en el store
+    dispatch(setSubscription(subscriptionType));
+    // Navega a la pantalla de suscripción correspondiente según el tipo de suscripción
+    navigation.navigate('Subscription', { subscriptionType });
+  };
+
   return (
-    <View>
-      <Text>Tienda</Text>
-      <Text>Navega sin anuncios, con descripción de 0.99 USD/mes</Text>
-      <Text>Seven Plus Premium, con descripción desbloquea todas las funcionalidades premium 7.99 USD</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Tienda</Text>
+      <TouchableOpacity
+        style={styles.optionContainer}
+        onPress={() => handleSubscription('navegaSinAnuncios')}
+      >
+        <Text style={styles.optionTitle}>Navega sin anuncios</Text>
+        <Text style={styles.optionDescription}>Disfruta de Seven Plus sin que te distraigan los anuncios</Text>
+        <Text style={styles.optionPrice}>$0.99 USD/mes</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.optionContainer}
+        onPress={() => handleSubscription('sevenPlusPremium')}
+      >
+        <Text style={styles.optionTitle}>Seven Plus Premium</Text>
+        <Text style={styles.optionDescription}>Obtén Seven Plus Premium para desbloquear mejores roles y funcionalidades</Text>
+        <Text style={styles.optionPrice}>$7.99 USD</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-export default StoreScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  optionContainer: {
+    backgroundColor: 'gold',
+    borderRadius: 10,
+    padding: 20,
+    marginBottom: 15,
+  },
+  optionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'black',
+    textAlign: 'center',
+  },
+  optionDescription: {
+    fontSize: 16,
+    color: 'black',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  optionPrice: {
+    fontSize: 16,
+    color: 'green',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+});
+
+// Mapeo del estado a las propiedades del componente
+const mapStateToProps = (state) => ({
+  subscription: state.subscription.subscription,
+});
+
+// Conectar el componente al store
+export default connect(mapStateToProps)(StoreScreen);
