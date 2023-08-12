@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   image: {
-    width: 300, // Ajusta el tamaño de la imagen según tus necesidades
-    height: 300, // Ajusta el tamaño de la imagen según tus necesidades
+    width: 300,
+    height: 300,
     marginBottom: 2,
   },
   input: {

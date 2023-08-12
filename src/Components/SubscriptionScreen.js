@@ -1,40 +1,56 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 
-const SubscriptionScreen = ({ route }) => {
+const SubscriptionScreen = ({ route, navigation }) => {
   const { subscriptionType } = route.params;
 
-  const renderSubscriptionDetails = () => {
+  const handleSubscription = () => {
+    let subscriptionDescription = '';
+    let subscriptionPrice = '';
+
     if (subscriptionType === 'navegaSinAnuncios') {
-      return (
-        <View>
-          <Text style={styles.title}>Juega sin anuncios</Text>
-          <Text style={styles.price}>$0.99 USD/mes</Text>
-          <Text style={styles.description}>Disfruta de Seven Plus sin anuncios</Text>
-          <TouchableOpacity style={styles.subscribeButton}>
-            <Text style={styles.buttonText}>Suscribirse</Text>
-          </TouchableOpacity>
-        </View>
-      );
+      subscriptionDescription = 'Juega sin anuncios';
+      subscriptionPrice = '$0.99 USD/mes';
     } else if (subscriptionType === 'sevenPlusPremium') {
-      return (
-        <View>
-          <Text style={styles.title}>Acceso Seven Plus <Text style={styles.premiumText}>Premium</Text></Text>
-          <Text style={styles.description}>Desbloquea el rol de Admin para crear y administrar tus propias ligas!</Text>
-          <TouchableOpacity style={styles.subscribeButton}>
-            <Text style={styles.buttonText}>Comprar acceso</Text>
-          </TouchableOpacity>
-        </View>
-      );
+      subscriptionDescription = 'Acceso Seven Plus Premium';
+      subscriptionPrice = '$7.99 USD';
     }
+
+    // Mostrar una alerta de confirmación de compra
+    Alert.alert(
+      'Confirmación de compra',
+      `¿Deseas comprar ${subscriptionDescription} por ${subscriptionPrice}?`,
+      [
+        {
+          text: 'Cancelar',
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            if (subscriptionType === 'navegaSinAnuncios') {
+              // Lógica para suscripción sin anuncios
+            } else if (subscriptionType === 'sevenPlusPremium') {
+              navigation.navigate('Premium'); // Navegar a la pantalla de acceso premium
+            }
+          },
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   return (
     <View style={styles.container}>
-      {renderSubscriptionDetails()}
+      {/* ... (código para mostrar detalles de suscripciones) */}
+      <TouchableOpacity style={styles.subscribeButton} onPress={handleSubscription}>
+        <Text style={styles.buttonText}>Comprar acceso</Text>
+      </TouchableOpacity>
     </View>
   );
 };
+
+
 
 const styles = StyleSheet.create({
   container: {
