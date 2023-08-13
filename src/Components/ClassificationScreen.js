@@ -5,8 +5,14 @@ const Classification = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [teamName, setTeamName] = useState('');
   const [teams, setTeams] = useState([]);
+  const [error, setError] = useState('');
+
 
   const addTeam = () => {
+      if (teamName.trim() === '') {
+        setError('No puedes dejar este campo vacío.');
+        return;
+      }
     const newTeam = {
       id: teams.length.toString(),
       name: teamName,
@@ -44,16 +50,19 @@ const Classification = () => {
           setModalVisible(!modalVisible);
         }}
       >
-        <View style={styles.modalContainer}>
-          <TextInput
-            placeholder="Nombre del equipo"
-            style={styles.inputContainer}
-            value={teamName}
-            onChangeText={setTeamName}
-          />
-          <Button title="Confirmar" onPress={addTeam} />
-          <Button title="Cancelar" onPress={() => setModalVisible(false)} />
-        </View>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+               <TextInput
+                 placeholder="Nombre del equipo"
+                 style={styles.inputContainer}
+                 value={teamName}
+                 onChangeText={setTeamName}
+               />
+                {error ? <Text style={styles.errorMessage}>{error}</Text> : null}
+                <Button title="Confirmar" onPress={addTeam} />
+                <Button title="Cancelar" onPress={() => { setError(''); setModalVisible(false); }} />
+             </View>
+          </View>
       </Modal>
 
       {teams.length > 0 && (
@@ -106,13 +115,8 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
   },
-  inputContainer: {
-    flex: 1,
-    padding: 24,
-    alignItems: 'center',
-  },
   title: {
-    alignItems: 'center',
+    textAlign: 'left',
     fontSize: 22,
     fontWeight: 'bold'
   },
@@ -120,6 +124,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFA500',
     padding: 10,
     borderRadius: 5,
+    width:'50%',
+    alignItems: 'right',
   },
   addButtonText: {
     fontSize: 18,
@@ -130,10 +136,22 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',  // fondo gris semi-transparente
+  },
+  modalContent: {
+    width: '80%',
+    padding: 20,
+    backgroundColor: 'white',
+    borderRadius: 12,
+    alignItems: 'center',
   },
   teamName: {
     fontSize: 18,
     color: 'black',
+  },
+  errorMessage: {
+    color: 'red',
+    marginBottom: 10,
   },
   inputContainer: {
     borderColor: '#EDEDED',
@@ -154,12 +172,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: 'white',
-  },
-  tableHeader: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: 'black',
-    marginBottom: 10,
   },
   tableHeader: {
     flexDirection: 'row',
