@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert, ScrollView } from 'react-native';
+
 
 const SubscriptionScreen = ({ route, navigation }) => {
   const { subscriptionType } = route.params;
@@ -41,39 +42,47 @@ const SubscriptionScreen = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      {/* ... (código para mostrar detalles de suscripciones) */}
-      <TouchableOpacity style={styles.subscribeButton} onPress={handleSubscription}>
-        <Text style={styles.buttonText}>Comprar acceso</Text>
-      </TouchableOpacity>
-    </View>
+    <ScrollView style={styles.container}>
+      <Text style={styles.description}>
+        Con Seven Plus Premium, puedes crear ligas, administrar inscripciones de equipos, ingresar estadísticas, y disfrutar de muchas funcionalidades más. ¡Eleva tu experiencia al siguiente nivel!
+      </Text>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.subscribeButton} onPress={handleSubscription}>
+          <Text style={styles.buttonText}>Comprar acceso</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 };
-
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    padding: 15,
+  },
+  contentContainer: {
+    flexGrow: 1,
+    justifyContent: 'space-between',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
+    textAlign: 'center',
   },
   premiumText: {
     color: 'blue',
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   price: {
     fontSize: 18,
     color: 'green',
     marginBottom: 20,
+    textAlign: 'center',
   },
   description: {
-    fontSize: 16,
+    fontSize: 24,
     textAlign: 'center',
     marginBottom: 30,
   },
@@ -82,12 +91,20 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
+    marginBottom: 10,
   },
   buttonText: {
     fontSize: 18,
     fontWeight: 'bold',
     color: 'black',
+    textAlign: 'center',
   },
 });
 
 export default SubscriptionScreen;
+
+
+
+
+
+

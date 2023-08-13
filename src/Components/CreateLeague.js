@@ -2,80 +2,113 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {Picker} from '@react-native-picker/picker';
+import { useNavigation } from '@react-navigation/native';
+
 
 const CreateLeague = () => {
   const [leagueName, setLeagueName] = useState('');
-  const initialStartDate = new Date();
-  const [startDate, setStartDate] = useState(initialStartDate);
-  const [endDate, setEndDate] = useState('');
-  const [clubName, setClubName] = useState('');
-  const [city, setCity] = useState('');
-  const [address, setAddress] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [showStartDatePicker, setShowStartDatePicker] = useState(false);
+  const [showEndDatePicker, setShowEndDatePicker] = useState(false);
+  const [phase, setPhase] = useState('');
+  const navigation = useNavigation();
 
   const handleSubmit = () => {
-    // Aquí puedes agregar la lógica para manejar el envío del formulario
-    // Puedes utilizar los valores almacenados en los estados para enviar la información
+    const currentDate = new Date();
+    // Validación: El nombre de la liga no debe estar vacío
+    if (!leagueName.trim()) {
+    alert("Por favor, ingresa el nombre de la liga.");
+    return;
+    }
+     // Validación: La fecha de inicio no debe ser anterior a la fecha actual
+    if (startDate < currentDate.setHours(0, 0, 0, 0)) {  // Se resetean horas, minutos, segundos y milisegundos a 0 para solo comparar la fecha.
+    alert("La fecha de inicio no puede ser anterior a la fecha actual.");
+    return;
+    }
+  // Validación: No debe seleccionar la opción "Seleccionar fase"
+    if (phase === "Seleccione una de las opciones") {
+    alert("Por favor, selecciona una fase válida.");
+    return;
+    }
+
+    navigation.navigate('MyLeague');
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Nueva Liga</Text>
+
       <Text style={styles.subtitle}>Nombre de la liga*</Text>
       <TextInput
         style={styles.input}
-        placeholder="Nombre de la liga*"
+        placeholder="Nombre de la liga"
         value={leagueName}
         onChangeText={setLeagueName}
       />
-      <View style={styles.dateContainer}>
-        <Text style={styles.dateLabel}>Fecha de inicio*</Text>
-        <View style={styles.datePickerContainer}>
+
+      <Text style={styles.subtitle}>Fecha de inicio*</Text>
+      <TouchableOpacity onPress={() => setShowStartDatePicker(true)}>
+        <View style={styles.dateContainer}>
           <FontAwesome5 name="calendar" size={20} color="#68707d" style={styles.icon} />
-          <DateTimePicker
-            style={styles.inputField}
-            date={startDate}
-            mode="date"
-            format="YYYY-MM-DD"
-            value={new Date()} // Evita seleccionar fechas anteriores al día de hoy
-            confirmBtnText="Confirmar"
-            cancelBtnText="Cancelar"
-            customStyles={{
-              dateInput: {
-                borderWidth: 0,
-              },
-            }}
-            onDateChange={(date) => setStartDate(date)}
-          />
+          <Text>{startDate.toLocaleDateString()}</Text>
         </View>
-      </View>
-      <View style={styles.dateContainer}>
-        <Text style={styles.dateLabel}>Fecha de finalización*</Text>
-        <View style={styles.datePickerContainer}>
+      </TouchableOpacity>
+      {showStartDatePicker && (
+        <DateTimePicker
+          mode="date"
+          value={startDate}
+          display="default"
+          onChange={(event, date) => {
+            setShowStartDatePicker(false);
+            if (date) {
+              setStartDate(date);
+            }
+          }}
+        />
+      )}
+
+      <Text style={styles.subtitle}>Fecha de finalización*</Text>
+      <TouchableOpacity onPress={() => setShowEndDatePicker(true)}>
+        <View style={styles.dateContainer}>
           <FontAwesome5 name="calendar" size={20} color="#68707d" style={styles.icon} />
-          <DateTimePicker
-            style={styles.inputField}
-            date={endDate}
-            mode="date"
-            format="YYYY-MM-DD"
-            value={new Date()} // Evita seleccionar fechas anteriores al día de hoy
-            confirmBtnText="Confirmar"
-            cancelBtnText="Cancelar"
-            customStyles={{
-              dateInput: {
-                borderWidth: 0,
-              },
-            }}
-            onDateChange={(date) => setEndDate(date)}
-          />
+          <Text>{endDate.toLocaleDateString()}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
+      {showEndDatePicker && (
+        <DateTimePicker
+          mode="date"
+          value={endDate}
+          display="default"
+          onChange={(event, date) => {
+            setShowEndDatePicker(false);
+            if (date) {
+              setEndDate(date);
+            }
+          }}
+        />
+      )}
+      <Text style={styles.subtitle}>Fases de liga</Text>
+      <Picker
+        selectedValue={phase}
+        onValueChange={(itemValue) => setPhase(itemValue)}
+        style={styles.picker}
+      >
+        <Picker.Item label="Seleccionar fase" value="Seleccione una de las" />
+        <Picker.Item label="Todos contra todos" value="todosContraTodos" />
+        <Picker.Item label="Todos contra todos + Eliminatoria" value="todosContraTodosEliminatoria" />
+        <Picker.Item label="Eliminatoria" value="eliminatoria" />
+      </Picker>
+
+
       <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Crear Liga</Text>
       </TouchableOpacity>
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -118,6 +151,19 @@ const styles = StyleSheet.create({
   },
   inputField: {
     borderWidth: 0,
+  },
+  pickerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  pickerLabel: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginRight: 10,
+  },
+  picker: {
+    flex: 1,
   },
   submitButton: {
     backgroundColor: '#fd2525',
