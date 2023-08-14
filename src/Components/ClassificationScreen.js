@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   modalContainer: {
-    flex: 1,
+    flex: 2,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',  // fondo gris semi-transparente

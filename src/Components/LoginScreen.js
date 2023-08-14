@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { authenticateUser } from './AuthenticationTest';
-import spImage from 'SevenPlusAppTfm/assets/sp.png';
+import logoImage from 'SevenPlusAppTfm/assets/logo.png';
 
 function LoginScreen({ navigation }) {
 
@@ -47,8 +47,7 @@ function LoginScreen({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
      <View style={styles.container}>
-        <Image source={spImage} style={styles.image}
-
+        <Image source={logoImage} style={styles.image}
         />
         <TextInput
           style={styles.input}
@@ -87,24 +86,25 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#00425A',
   },
   image: {
-    width: 300,
-    height: 300,
+    width: 400,
+    height: 200,
     marginBottom: 2,
+    resizeMode: 'center',
   },
   input: {
     width: '80%',
     height: 50,
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: 'white',
     borderRadius: 8,
     marginBottom: 12,
     paddingHorizontal: 12,
   },
   loginButton: {
-    backgroundColor: 'blue',
+    backgroundColor: '#BFDB38',
     width: '80%',
     height: 50,
     justifyContent: 'center',
@@ -124,11 +124,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: 'blue',
+    borderColor: '#BFDB38',
     marginBottom: 16,
   },
   registerText: {
-    color: 'blue',
+    color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
   },
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   forgotPasswordText: {
-    color: 'blue',
+    color: '#BFDB38',
     fontSize: 16,
     fontWeight: 'bold',
     textDecorationLine: 'underline',

@@ -6,6 +6,8 @@ import PremiumAccessScreen from './PremiumAccessScreen';
 import CreateLeague from './CreateLeague';
 import MyLeague from './MyLeague';
 import ClassificationScreen from './ClassificationScreen';
+import VerificationScreen from './VerificationScreen'
+import MyLeaguesScreen from './MyLeaguesScreen';
 
 const Stack = createStackNavigator();
 
@@ -18,6 +20,8 @@ const AuthStack = () => {
       <Stack.Screen name="Create League" component={CreateLeague} />
       <Stack.Screen name="MyLeague" component={MyLeague} />
       <Stack.Screen name="Classification" component={ClassificationScreen} />
+      <Stack.Screen name="Verification" component={VerificationScreen} />
+      <Stack.Screen name="Mis Ligas" component={MyLeaguesScreen} />
     </Stack.Navigator>
   );
 };

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { faCalendar } from '@fortawesome/free-solid-svg-icons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 function RegisterScreen({navigation}) {
   const [email, setEmail] = useState('');
@@ -63,128 +62,149 @@ function RegisterScreen({navigation}) {
     console.log('Contraseña:', password);
   };
 
-  return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <Text style={styles.logo}>SevenPlus - Registro</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Nombre"
-          value={firstName}
-          onChangeText={setFirstName}
-          autoCapitalize="words"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Apellido"
-          value={lastName}
-          onChangeText={setLastName}
-          autoCapitalize="words"
-        />
-        <TouchableOpacity style={styles.dateContainer} onPress={toggleDatePicker}>
-          <Text style={styles.dateText}>
-            {birthdate ? birthdate.toDateString() : 'Fecha de nacimiento'}
-          </Text>
-          <FontAwesomeIcon icon={faCalendar} style={styles.calendarIcon} />
-        </TouchableOpacity>
-        {showDatePicker && (
-          <DateTimePicker
-            value={birthdate || new Date()}
-            mode="date"
-            display="spinner"
-            minimumDate={minDate}
-            maximumDate={maxDate}
-            onChange={handleDateChange}
+    return (
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView style={styles.container}>
+          <Text style={styles.logo}>SevenPlus - Registro</Text>
+
+          <Text style={styles.subtitle}>Nombre</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Nombre"
+            value={firstName}
+            onChangeText={setFirstName}
+            autoCapitalize="words"
           />
-        )}
-        <TextInput
-          style={styles.input}
-          placeholder="Correo electrónico"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Contraseña"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Repetir contraseña"
-          secureTextEntry
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          autoCapitalize="none"
-        />
-        <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
-          <Text style={styles.registerText}>Registrarse</Text>
-        </TouchableOpacity>
-      </View>
-    </TouchableWithoutFeedback>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  logo: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 16,
-  },
-  input: {
-    width: '80%',
-    height: 50,
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 8,
-    marginBottom: 16,
-    paddingHorizontal: 12,
-  },
-  registerButton: {
-    backgroundColor: 'blue',
-    width: '80%',
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 8,
-    marginBottom: 16,
-  },
-  registerText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  dateContainer: {
-    width: '80%',
-    height: 50,
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 8,
-    marginBottom: 16,
-    paddingHorizontal: 12,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  dateText: {
-    fontSize: 16,
-    color: 'black',
-  },
-  calendarIcon: {
-    fontSize: 20,
-    color: 'black',
-  },
-});
+          <Text style={styles.subtitle}>Apellido</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Apellido"
+            value={lastName}
+            onChangeText={setLastName}
+            autoCapitalize="words"
+          />
 
-export default RegisterScreen;
+          <TouchableOpacity style={styles.dateContainer} onPress={toggleDatePicker}>
+            <FontAwesome5 name="calendar" size={20} color="white" style={styles.icon} />
+            <Text style={styles.dateText}>
+              {birthdate ? birthdate.toDateString() : 'Fecha de nacimiento'}
+            </Text>
+          </TouchableOpacity>
 
+          {showDatePicker && (
+            <DateTimePicker
+              value={birthdate || new Date()}
+              mode="date"
+              display="spinner"
+              minimumDate={minDate}
+              maximumDate={maxDate}
+              onChange={handleDateChange}
+            />
+          )}
+
+          <Text style={styles.subtitle}>Correo electrónico</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Correo electrónico"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+
+          <Text style={styles.subtitle}>Ingresa nueva contraseña</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Contraseña"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+            autoCapitalize="none"
+          />
+
+          <Text style={styles.subtitle}>Repite contraseña</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Repetir contraseña"
+            secureTextEntry
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            autoCapitalize="none"
+          />
+
+          <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
+            <Text style={styles.registerText}>Registrarse</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    );
+  }
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#00425A',
+      paddingTop: 20,
+      paddingHorizontal: 20,
+    },
+    logo: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      color: 'white',
+      textAlign: 'left',
+      marginBottom: 20,
+    },
+    subtitle: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: 'white',
+      textAlign: 'left',
+      marginBottom: 8,
+    },
+    input: {
+      width: '100%',
+      height: 50,
+      borderWidth: 1,
+      borderColor: '#BFDB38',
+      borderRadius: 8,
+      marginBottom: 16,
+      paddingHorizontal: 12,
+      color: 'white', // Para que el texto ingresado sea blanco
+    },
+    registerButton: {
+      backgroundColor: '#FD2525',
+      width: '100%',
+      height: 50,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 8,
+      marginBottom: 16,
+    },
+    registerText: {
+      color: 'white',
+      fontSize: 18,
+      fontWeight: 'bold',
+    },
+    dateContainer: {
+      width: '100%',
+      height: 50,
+      borderWidth: 1,
+      borderColor: '#BFDB38',
+      borderRadius: 8,
+      marginBottom: 16,
+      paddingHorizontal: 12,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    dateText: {
+      fontSize: 16,
+      color: 'white',
+    },
+    icon: {
+      color: 'white',
+    },
+  });
+
+  export default RegisterScreen;
