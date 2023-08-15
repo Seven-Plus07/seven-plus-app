@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 
-function ForgotPasswordScreen({ AuthStack }) {
+function ForgotPasswordScreen({ navigation }) {
   const [email, setEmail] = useState('');
 
   const handleForgotPassword = () => {
     // Implementar lógica para enviar correo electrónico para restablecer contraseña
     // Aquí puedes agregar la lógica para enviar el correo con un código o enlace para cambiar la contraseña
     // Puedes utilizar algún servicio de envío de correos electrónicos o una API para enviar el correo
-    // Después de enviar el correo, puedes mostrar un mensaje de éxito o error
+    // Después de enviar el correo, puedes mostrar un mensaje de éxito o error}
+
     Alert.alert('Correo enviado', 'Se ha enviado un correo electrónico para restablecer la contraseña');
   };
 
