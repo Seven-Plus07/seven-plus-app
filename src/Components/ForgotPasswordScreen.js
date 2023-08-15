@@ -1,20 +1,34 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
+import ForgotPasswordImage from 'SevenPlusAppTfm/assets/ForgotPassword.png'
+import { useNavigation } from '@react-navigation/native';
 
-function ForgotPasswordScreen({ navigation }) {
+function ForgotPasswordScreen(){
   const [email, setEmail] = useState('');
+  const [errorMessage, setErrorMessage] = useState(null);
+  const navigation = useNavigation();
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   const handleForgotPassword = () => {
-    // Implementar lógica para enviar correo electrónico para restablecer contraseña
-    // Aquí puedes agregar la lógica para enviar el correo con un código o enlace para cambiar la contraseña
-    // Puedes utilizar algún servicio de envío de correos electrónicos o una API para enviar el correo
-    // Después de enviar el correo, puedes mostrar un mensaje de éxito o error}
+    // Si el email está vacío
+    if (!email.trim()) {
+      setErrorMessage('Por favor, ingresa un correo electrónico.');
+      return;
+    }
 
-    Alert.alert('Correo enviado', 'Se ha enviado un correo electrónico para restablecer la contraseña');
+     // Verificar si el correo es válido usando la expresión regular
+     if (!emailRegex.test(email)) {
+      setErrorMessage('Correo electrónico no válido');
+      return; // Detener el proceso de inicio de sesión
+    }
+
+    navigation.navigate('Reset Password');
   };
 
   return (
     <View style={styles.container}>
+       <Image source={ForgotPasswordImage} style={styles.image}
+       />
       <Text style={styles.logo}>SevenPlus - Olvidaste tu contraseña?</Text>
       <TextInput
         style={styles.input}
@@ -24,6 +38,7 @@ function ForgotPasswordScreen({ navigation }) {
         keyboardType="email-address"
         autoCapitalize="none"
       />
+      {errorMessage && <Text style={styles.errorText}>{errorMessage}</Text>}
       <TouchableOpacity style={styles.forgotPasswordButton} onPress={handleForgotPassword}>
         <Text style={styles.forgotPasswordText}>Enviar correo</Text>
       </TouchableOpacity>
@@ -36,24 +51,31 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#00425A',
+  },
+  image: {
+    width: 400,
+    height: 400,
+    marginBottom: 2,
+    resizeMode: 'center',
   },
   logo: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 16,
+    color: 'white'
   },
   input: {
     width: '80%',
     height: 50,
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: '#BFDB38',
     borderRadius: 8,
     marginBottom: 16,
     paddingHorizontal: 12,
   },
   forgotPasswordButton: {
-    backgroundColor: 'blue',
+    backgroundColor: '#FD2525',
     width: '80%',
     height: 50,
     justifyContent: 'center',
@@ -65,6 +87,10 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 10,
   },
 });
 

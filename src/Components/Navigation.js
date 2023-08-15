@@ -22,7 +22,7 @@ function Navigation() {
     <Provider store={store}>
       <NavigationContainer>
       <Drawer.Navigator>
-        <Drawer.Screen name="Bienvenido" component={AuthStack} options={{ headerShown: false }} />
+        <Drawer.Screen name="Bienvenido" component={AuthStack}/>
           <Drawer.Screen name="Mis Ligas" component={MyLeaguesScreen}/>
           <Drawer.Screen name="Mi Perfil" component={ProfileScreen} />
           <Drawer.Screen name="Tienda" component={StoreScreen} />
