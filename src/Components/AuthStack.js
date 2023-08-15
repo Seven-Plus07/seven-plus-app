@@ -8,6 +8,7 @@ import MyLeague from './MyLeague';
 import ClassificationScreen from './ClassificationScreen';
 import VerificationScreen from './VerificationScreen'
 import MyLeaguesScreen from './MyLeaguesScreen';
+import ForgotPasswordScreen from './ForgotPasswordScreen';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,7 @@ const AuthStack = () => {
       <Stack.Screen name="Classification" component={ClassificationScreen} />
       <Stack.Screen name="Verification" component={VerificationScreen} />
       <Stack.Screen name="Mis Ligas" component={MyLeaguesScreen} />
+      <Stack.Screen name="Forgot Password" component={ForgotPasswordScreen} />
     </Stack.Navigator>
   );
 };

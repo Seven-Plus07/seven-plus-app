@@ -72,7 +72,7 @@ function LoginScreen({ navigation }) {
         <TouchableOpacity style={styles.registerButton} onPress={() => navigation.navigate('Register')}>
           <Text style={styles.registerText}>Registrarse</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.forgotPasswordButton} onPress={() => navigation.navigate('Register')}>
+        <TouchableOpacity style={styles.forgotPasswordButton} onPress={() => navigation.navigate('Forgot Password')}>
           <Text style={styles.forgotPasswordText}>¿Olvidaste tu contraseña?</Text>
         </TouchableOpacity>
 
