@@ -29,6 +29,10 @@ function RegisterScreen({navigation}) {
   };
 
   const handleRegister = () => {
+
+    const hasNumber = /\d/.test(Password);
+    const hasSpecialCharacter = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password);
+
     // Validar campos obligatorios
     if (!email || !password || !confirmPassword || !firstName || !lastName || !birthdate) {
       Alert.alert('Error', 'Por favor, complete todos los campos');
@@ -40,6 +44,16 @@ function RegisterScreen({navigation}) {
       Alert.alert('Error', 'Las contraseñas no coinciden');
       return;
     }
+    if (password.length < 8) {
+      Alert.alert('Error', 'La contraseña debe tener al menos 8 caracteres.');
+      return;
+    }
+
+    if (!hasNumber || !hasSpecialCharacter) {
+      Alert.alert('Error', 'La contraseña debe tener al menos un número y un carácter especial.');
+      return;
+    }
+
 
     // Validar la edad del usuario
     const birthdateDate = new Date(birthdate);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import cupImage from 'SevenPlusAppTfm/assets/cup.png'
 
 const MyLeaguesScreen = () => {
   const handleMenuPress = () => {
@@ -22,17 +23,11 @@ const MyLeaguesScreen = () => {
 
       {/* Si el usuario no está inscrito, mostrar la imagen y el botón para inscribirse */}
       {/* Si ya está inscrito, mostrar las ligas en las que está inscrito */}
-
-      <View style={styles.imageContainer}>
-        <Image
-          source={require('SevenPlusAppTfm/src/Images/Cup.png')}
-          style={styles.image}
-          resizeMode="contain"
+      <Image source={cupImage} style={styles.image}
         />
         <TouchableOpacity style={styles.inscribirseButton} onPress={handleInscribirsePress}>
           <Text style={styles.inscribirseButtonText}>Inscríbete a una liga</Text>
         </TouchableOpacity>
-      </View>
     </View>
   );
 };
@@ -42,23 +37,23 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#00425A',
   },
   menuIcon: {
     position: 'absolute',
-    top: 16,
-    left: 16,
+    top: 20,
+    left: 20,
     zIndex: 1,
   },
   headerText: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 8,
+    color:'white'
   },
   subHeaderText: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 'bold',
-    marginBottom: 20,
+    color: 'white'
   },
   imageContainer: {
     alignItems: 'center',

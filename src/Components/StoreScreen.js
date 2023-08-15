@@ -39,11 +39,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#00425A'
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 40,
+    color: '#FD2525'
   },
   optionContainer: {
     backgroundColor: 'gold',
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
   optionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'black',
+    color: '#FD2525',
     textAlign: 'center',
   },
   optionDescription: {
@@ -65,7 +67,7 @@ const styles = StyleSheet.create({
   },
   optionPrice: {
     fontSize: 16,
-    color: 'green',
+    color: '#1F8A70',
     textAlign: 'center',
     fontWeight: 'bold',
   },
