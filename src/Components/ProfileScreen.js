@@ -1,91 +1,284 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+  KeyboardAvoidingView,
+  ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Modal,
+} from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import { Picker } from "@react-native-picker/picker";
+import ImagePicker from "react-native-image-picker";
 
 function ProfileScreen() {
-  const [birthdate, setBirthdate] = useState('01/01/1990'); // Fecha de nacimiento inicial
-  const [role, setRole] = useState('Jugador'); // Rol inicial
-  const [country, setCountry] = useState(''); // País inicial
-  const [alias, setAlias] = useState(''); // Alias inicial
+  const [birthdate, setBirthdate] = useState(new Date());
+  const [role, setRole] = useState("");
+  const [country, setCountry] = useState("");
+  const [alias, setAlias] = useState("");
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [isPickerVisible, setPickerVisible] = useState(false);
 
   const handleSaveChanges = () => {
-    // Aquí puedes implementar la lógica para guardar los cambios en la información del usuario
-    // Por ejemplo, puedes enviar los datos a un backend para actualizar el perfil
-    console.log('Guardando cambios...');
-    console.log('Fecha de nacimiento:', birthdate);
-    console.log('Rol:', role);
-    console.log('País:', country);
-    console.log('Alias:', alias);
+    console.log("Guardando cambios...");
+    console.log("Fecha de nacimiento:", birthdate);
+    console.log("Rol:", role);
+    console.log("País:", country);
+    console.log("Alias:", alias);
   };
 
+  const onChangeDate = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      setBirthdate(selectedDate);
+    }
+  };
+
+  const [avatarSource, setAvatarSource] = useState(null);
+
+  const selectPhotoTapped = () => {
+    const options = {
+      title: "Selecciona una foto",
+      storageOptions: {
+        skipBackup: true,
+        path: "images",
+      },
+    };
+
+    ImagePicker.showImagePicker(options, (response) => {
+      if (response.didCancel) {
+        console.log("User cancelled image picker");
+      } else if (response.error) {
+        console.log("ImagePicker Error: ", response.error);
+      } else {
+        const source = { uri: response.uri };
+        setAvatarSource(source);
+      }
+    });
+  };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Mi Perfil</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Fecha de Nacimiento"
-        value={birthdate}
-        onChangeText={setBirthdate}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Rol"
-        value={role}
-        onChangeText={setRole}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="País"
-        value={country}
-        onChangeText={setCountry}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Alias"
-        value={alias}
-        onChangeText={setAlias}
-      />
-      <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
-        <Text style={styles.saveButtonText}>Guardar Cambios</Text>
-      </TouchableOpacity>
-    </View>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView
+          style={{ flex: 1 }}
+          contentContainerStyle={styles.container}
+          keyboardShouldPersistTaps="handled"
+        >
+          <TouchableOpacity onPress={selectPhotoTapped}>
+            {avatarSource === null ? (
+              <FontAwesome5 name="user-circle" size={80} color="white" />
+            ) : (
+              <View style={styles.avatarContainer}>
+                <Image style={styles.avatar} source={avatarSource} />
+                <FontAwesome5
+                  name="camera"
+                  size={20}
+                  color="white"
+                  style={styles.cameraIcon}
+                />
+              </View>
+            )}
+          </TouchableOpacity>
+          <Text style={styles.header}>Mi Perfil</Text>
+          <View style={styles.dateContainer}>
+            <FontAwesome5
+              name="calendar"
+              size={20}
+              color="#68707d"
+              style={styles.icon}
+            />
+            {showDatePicker ? (
+              <DateTimePicker
+                mode="date"
+                value={birthdate}
+                display="default"
+                onChange={onChangeDate}
+              />
+            ) : (
+              <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+                <Text style={styles.subtitle}>
+                  {birthdate.toLocaleDateString()}
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
+
+          {isPickerVisible && (
+            <Modal
+              transparent={true}
+              animationType="slide"
+              visible={isPickerVisible}
+              onRequestClose={() => setPickerVisible(false)}
+            >
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "rgba(0, 0, 0, 0.5)", // Fondo semitransparente
+                }}
+              >
+                <View
+                  style={{
+                    width: 200,
+                    height: 200,
+                    backgroundColor: "#00425A",
+                    borderRadius: 10,
+                  }}
+                >
+                  <Picker
+                    style={{ width: '100%', height: '100%' }}
+                    selectedValue={role}
+                    onValueChange={(itemValue) => {
+                      setRole(itemValue);
+                      setPickerVisible(false);
+                    }}
+                  >
+                    <Picker.Item
+                      label="Selecciona un rol"
+                      value=""
+                      color="white"
+                    />
+                    <Picker.Item
+                      label="Jugador"
+                      value="Jugador"
+                      color="white"
+                    />
+                    <Picker.Item label="DT" value="DT" color="white" />
+                    <Picker.Item label="Veedor" value="Veedor" color="white" />
+                  </Picker>
+                </View>
+              </View>
+            </Modal>
+          )}
+
+          <Text style={styles.inputLabel}>Rol</Text>
+          <TouchableOpacity
+            onPress={() => setPickerVisible(true)}
+            style={styles.input}
+          >
+            <Text>{role ? role : "Selecciona un rol"}</Text>
+          </TouchableOpacity>
+          <Text style={styles.inputLabel}>País</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="País"
+            value={country}
+            onChangeText={setCountry}
+          />
+          <Text style={styles.inputLabel}>Alias</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Alias"
+            value={alias}
+            onChangeText={setAlias}
+          />
+          <TouchableOpacity
+            style={styles.saveButton}
+            onPress={handleSaveChanges}
+          >
+            <Text style={styles.saveButtonText}>Guardar Cambios</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#00425A",
   },
   header: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 16,
+    color: "white",
   },
   input: {
-    width: '80%',
+    width: "80%",
     height: 50,
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: "#BFDB38",
     borderRadius: 8,
     marginBottom: 16,
     paddingHorizontal: 12,
+    color: "white",
   },
   saveButton: {
-    backgroundColor: 'blue',
-    width: '80%',
+    backgroundColor: "#FD2525",
+    width: "80%",
     height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 8,
     marginBottom: 16,
   },
   saveButtonText: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
+  },
+  dateContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  subtitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "white",
+    left: "auto",
+  },
+  dateLabel: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginRight: 10,
+    color: 'whit'
+  },
+  datePickerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  icon: {
+    marginRight: 10,
+  },
+  inputLabel: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "white",
+    alignSelf: "flex-start",
+    marginLeft: "10%",
+    marginBottom: 5,
+  },
+  avatarContainer: {
+    marginBottom: 16,
+    position: "relative",
+    alignItems: "center",
+  },
+  avatar: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+  },
+  cameraIcon: {
+    position: "absolute",
+    bottom: 0,
+    right: 0,
   },
 });
 
