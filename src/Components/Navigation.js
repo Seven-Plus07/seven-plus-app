@@ -1,51 +1,20 @@
-// Se importan dependencias de navigation
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from 'react-redux';
+import store from './Store'; // Asegúrate de tener la ruta correcta
 import AuthStack from './AuthStack';
+import MainDrawer from './MainDrawer';
 
-// Se importan las ventanas necesarias
-import MyLeaguesScreen from './MyLeaguesScreen';
-import ProfileScreen from './ProfileScreen';
-import StoreScreen from './StoreScreen';
-import store from './Store'; // Importa el store de Redux
-import SubscriptionScreen from './SubscriptionScreen'; // Importa la pantalla SubscriptionScreen
-import InvitationScreen from './InvitationScreen';
-import SettingsScreen from './SettingsScreen';
-import TeamRegistration from './TeamRegistration';
-
-const Drawer = createDrawerNavigator();
+const RootStack = createStackNavigator();
 
 function Navigation() {
   return (
-    // Envuelve el componente NavigationContainer con el Provider de Redux y utiliza el store
     <Provider store={store}>
       <NavigationContainer>
-        <Drawer.Navigator
-          screenOptions={{
-            drawerStyle:{
-              backgroundColor: '#00425A', // Color de fondo del cajón
-            },
-            drawerLabelStyle: {
-              color: '#1F8A70',  // Color de la fuente
-            },
-            headerStyle: {
-              backgroundColor: '#BFDB38',
-
-            }
-          }}
-        >
-          <Drawer.Screen name="Bienvenido" component={AuthStack} options={{
-            drawerLabel: () => null,}}/>
-          <Drawer.Screen name="Mis Ligas" component={MyLeaguesScreen}/>
-          <Drawer.Screen name="Registro de Equipos" component={TeamRegistration} />
-          <Drawer.Screen name="Mi Perfil" component={ProfileScreen} />
-          <Drawer.Screen name="Tienda" component={StoreScreen} />
-          <Drawer.Screen name="Invitar amigos" component={InvitationScreen} />
-          <Drawer.Screen name="Configuración" component={SettingsScreen} />
-          <Drawer.Screen name="Subscription" component={SubscriptionScreen} options={{
-            drawerLabel: () => null,}} />
-        </Drawer.Navigator>
+        <RootStack.Navigator screenOptions={{headerShown: false}} initialRouteName="Auth">
+          <RootStack.Screen name="Auth" component={AuthStack} />
+          <RootStack.Screen name="MainApp" component={MainDrawer} />
+        </RootStack.Navigator>
       </NavigationContainer>
     </Provider>
   );

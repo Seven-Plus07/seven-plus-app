@@ -32,7 +32,7 @@ function LoginScreen({ navigation }) {
         console.log('Iniciando sesión como:', email);
         console.log('Contraseña:', password);
         setErrorMessage('');
-        navigation.navigate('Mis Ligas');
+        navigation.navigate("MainApp");
         // Aquí puedes agregar la lógica para continuar con la navegación o autenticación
       } else {
          // Credenciales inválidas, mostrar mensaje de error
