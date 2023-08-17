@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, Modal, Button } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 
-const TeamRegistration = () => {
+const TeamRegistration = ({navigation, route}) => {
     const [teamName, setTeamName] = useState('');
     const [teams, setTeams] = useState([]);
     const [selectedTeamIndex, setSelectedTeamIndex] = useState(null);
@@ -15,10 +17,9 @@ const TeamRegistration = () => {
     };
 
     const handleEditTeam = () => {
-        // Lógica para editar el equipo
         closeTeamOptionsModal();
+        navigation.navigate('TeamInfo', { teamName: teams[selectedTeamIndex], teamIndex: selectedTeamIndex });
     };
-
     const handleDeleteTeam = () => {
         if (selectedTeamIndex !== null) {
             const updatedTeams = [...teams];
@@ -31,6 +32,38 @@ const TeamRegistration = () => {
     const closeTeamOptionsModal = () => {
         setSelectedTeamIndex(null);
     };
+
+    useFocusEffect(
+        React.useCallback(() => {
+            if (route.params?.updatedTeamName) {
+                const updatedTeams = [...teams];
+                updatedTeams[route.params.teamIndex] = route.params.updatedTeamName;
+                setTeams(updatedTeams);
+                navigation.setParams({ updatedTeamName: undefined, teamIndex: undefined });
+            }
+        }, [route.params])
+    );
+
+    // Cuando el componente se monta, carga los equipos del almacenamiento.
+    useEffect(() => {
+        const loadTeams = async () => {
+            const savedTeams = await AsyncStorage.getItem('teams');
+            if (savedTeams) {
+                setTeams(JSON.parse(savedTeams));
+            }
+        };
+
+        loadTeams();
+    }, []);
+
+    // Cada vez que los equipos cambien, guárdalos en el almacenamiento.
+    useEffect(() => {
+        const saveTeams = async () => {
+            await AsyncStorage.setItem('teams', JSON.stringify(teams));
+        };
+
+        saveTeams();
+    }, [teams]);
 
     return (
         <View style={styles.container}>
@@ -52,9 +85,7 @@ const TeamRegistration = () => {
                             <Text style={styles.teamText}>
                                 {team}
                             </Text>
-                            <FontAwesome5 name="user-plus" size={24} color="black" onPress={() => {
-                                // Lógica para agregar personas/jugadores al equipo
-                            }} />
+                            <FontAwesome5 name="user-plus" size={24} color="#00425A" onPress={() => navigation.navigate('AddPlayer')} />
                         </View>
                     </TouchableOpacity>
                 ))}
@@ -109,7 +140,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#ffffff',
+        backgroundColor: '#FD2525',
         padding: 15,
         borderRadius: 8,
         marginBottom: 10,
@@ -118,6 +149,8 @@ const styles = StyleSheet.create({
     },
     teamText: {
         flex: 1,
+        color: 'white',
+        fontWeight: 'bold',
     },
     modalContainer: {
         flex: 1,
