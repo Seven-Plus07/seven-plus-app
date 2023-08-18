@@ -36,10 +36,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: "#00425A"
   },
   optionContainer: {
     borderWidth: 1,
-    borderColor: '#fd2525',
+    borderColor: '#BFDB38',
     padding: 20,
     borderRadius: 10,
     marginBottom: 20,
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 18,
-    color: '#fd2525',
+    color: '#BFDB38',
   },
 });
 

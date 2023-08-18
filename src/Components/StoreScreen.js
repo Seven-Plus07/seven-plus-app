@@ -1,15 +1,20 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { connect } from 'react-redux'; // Importa connect de React Redux
-import { setSubscription } from './Store';
+import { connect } from 'react-redux';
+import { setSubscription } from './subscriptionDuck';
 
-const StoreScreen = ({ navigation, subscription, dispatch }) => {
+const StoreScreen = ({ navigation, dispatch }) => {
   const handleSubscription = (subscriptionType) => {
     // Dispatch de la acción para actualizar la suscripción en el store
     dispatch(setSubscription(subscriptionType));
-    // Navega a la pantalla de suscripción correspondiente según el tipo de suscripción
-    navigation.navigate('Subscription', { subscriptionType });
+    // Decide a qué pantalla navegar según el tipo de suscripción
+    if (subscriptionType === 'navegaSinAnuncios') {
+      navigation.navigate('NoAdsScreen', { subscriptionType });
+    } else if (subscriptionType === 'sevenPlusPremium') {
+      navigation.navigate('SubscriptionScreen', { subscriptionType });
+    }
   };
+
 
   return (
     <View style={styles.container}>
@@ -73,10 +78,5 @@ const styles = StyleSheet.create({
   },
 });
 
-// Mapeo del estado a las propiedades del componente
-const mapStateToProps = (state) => ({
-  subscription: state.subscription.subscription,
-});
-
 // Conectar el componente al store
-export default connect(mapStateToProps)(StoreScreen);
+export default connect()(StoreScreen);

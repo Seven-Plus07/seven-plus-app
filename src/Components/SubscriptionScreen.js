@@ -1,48 +1,35 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert, ScrollView } from 'react-native';
-
+import { View, Text, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
 
 const SubscriptionScreen = ({ route, navigation }) => {
   const { subscriptionType } = route.params;
 
   const handleSubscription = () => {
-    let subscriptionDescription = '';
-    let subscriptionPrice = '';
-
-    if (subscriptionType === 'navegaSinAnuncios') {
-      subscriptionDescription = 'Juega sin anuncios';
-      subscriptionPrice = '$0.99 USD/mes';
-    } else if (subscriptionType === 'sevenPlusPremium') {
-      subscriptionDescription = 'Acceso Seven Plus Premium';
-      subscriptionPrice = '$7.99 USD';
-    }
-
-    // Mostrar una alerta de confirmación de compra
-    Alert.alert(
-      'Confirmación de compra',
-      `¿Deseas comprar ${subscriptionDescription} por ${subscriptionPrice}?`,
-      [
-        {
-          text: 'Cancelar',
-          style: 'cancel',
-        },
-        {
-          text: 'OK',
-          onPress: () => {
-            if (subscriptionType === 'navegaSinAnuncios') {
-              // Lógica para suscripción sin anuncios
-            } else if (subscriptionType === 'sevenPlusPremium') {
-              navigation.navigate('Premium'); // Navegar a la pantalla de acceso premium
+    if (subscriptionType === 'sevenPlusPremium') {
+      // Mostrar alerta para "Seven Plus Premium"
+      Alert.alert(
+        'Confirmación de compra',
+        '¿Deseas comprar Acceso Seven Plus Premium por $7.99 USD?',
+        [
+          {
+            text: 'Cancelar',
+            style: 'cancel',
+          },
+          {
+            text: 'OK',
+            onPress: () => {
+              navigation.navigate('MainApp'); // Navegar a la pantalla de acceso premium
             }
           },
-        },
-      ],
-      { cancelable: false }
-    );
+        ],
+        { cancelable: false }
+      );
+    }
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
+      <Image source={require('SevenPlusAppTfm/assets/Premium.png')} style={styles.image} />
       <Text style={styles.description}>
         Con Seven Plus Premium, puedes crear ligas, administrar inscripciones de equipos, ingresar estadísticas, y disfrutar de muchas funcionalidades más. ¡Eleva tu experiencia al siguiente nivel!
       </Text>
@@ -51,7 +38,7 @@ const SubscriptionScreen = ({ route, navigation }) => {
           <Text style={styles.buttonText}>Comprar acceso</Text>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -59,32 +46,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 15,
+    justifyContent: 'center',  // Centra los elementos en el eje vertical
+    alignItems: 'center',      // Centra los elementos en el eje horizontal
+    backgroundColor: '#00425A'
   },
-  contentContainer: {
-    flexGrow: 1,
-    justifyContent: 'space-between',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  premiumText: {
-    color: 'blue',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  price: {
-    fontSize: 18,
-    color: 'green',
-    marginBottom: 20,
-    textAlign: 'center',
+  image: {
+    width: 300,        // Establece el ancho de la imagen
+    height: 300,       // Establece el alto de la imagen
+    marginBottom: 14,  // Agrega un margen en la parte inferior para separarla del texto
+    resizeMode: 'contain' // Asegura que la imagen mantenga su relación de aspecto original
   },
   description: {
     fontSize: 24,
     textAlign: 'center',
     marginBottom: 30,
+    color: 'white',
+    fontWeight: 'bold',
   },
   subscribeButton: {
     backgroundColor: 'gold',
@@ -102,9 +79,3 @@ const styles = StyleSheet.create({
 });
 
 export default SubscriptionScreen;
-
-
-
-
-
-

@@ -13,6 +13,9 @@ import ResetPasswordScreen from './ResetPasswordScreen';
 import AddPlayer from './AddPlayer';
 import TeamRegistration from './TeamRegistration';
 import TeamInfo from './TeamInfo';
+import SubscriptionScreen from './SubscriptionScreen'
+import NoAdsScreen from './NoAdsScreen';
+
 
 const Stack = createStackNavigator();
 
@@ -32,6 +35,8 @@ const AuthStack = () => {
       <Stack.Screen name="AddPlayer" component={AddPlayer} />
       <Stack.Screen name="TeamRegistration" component={TeamRegistration} />
       <Stack.Screen name="TeamInfo" component={TeamInfo} />
+      <Stack.Screen name="SubscriptionScreen" component={SubscriptionScreen} />
+      <Stack.Screen name="NoAdsScreen" component={NoAdsScreen} />
     </Stack.Navigator>
   );
 };
