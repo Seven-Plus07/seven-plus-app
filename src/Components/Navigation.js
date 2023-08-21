@@ -12,16 +12,6 @@ function Navigation() {
   // Usa useSelector para obtener el estado de autenticación desde tu Redux store
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
-  useEffect(() => {
-    // Aquí puedes verificar el estado de autenticación desde AsyncStorage o cualquier otro lugar
-    // y despachar una acción a Redux si es necesario, por ahora sólo simulamos una carga con un setTimeout
-
-    setTimeout(() => {
-      setIsInitialLoading(false);
-    }, 1000); // Puedes eliminar este timeout si no estás haciendo una verificación inicial
-  }, []);
-
-
   return (
     <Provider store={store}>
       <NavigationContainer>

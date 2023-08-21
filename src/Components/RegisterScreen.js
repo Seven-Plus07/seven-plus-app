@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, TouchableWithoutFeedback, Keyboard, Platform, StatusBar } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
 
 function RegisterScreen({navigation}) {
   const [email, setEmail] = useState('');
@@ -76,92 +77,93 @@ function RegisterScreen({navigation}) {
     console.log('Contraseña:', password);
   };
 
-    return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ScrollView style={styles.container}>
-          <Text style={styles.logo}>SevenPlus - Registro</Text>
+  return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <Text style={styles.logo}>SevenPlus - Registro</Text>
 
-          <Text style={styles.subtitle}>Nombre</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Nombre"
-            value={firstName}
-            onChangeText={setFirstName}
-            autoCapitalize="words"
+        <Text style={styles.subtitle}>Nombre</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Nombre"
+          value={firstName}
+          onChangeText={setFirstName}
+          autoCapitalize="words"
+        />
+
+        <Text style={styles.subtitle}>Apellido</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Apellido"
+          value={lastName}
+          onChangeText={setLastName}
+          autoCapitalize="words"
+        />
+
+        <TouchableOpacity style={styles.dateContainer} onPress={toggleDatePicker}>
+          <FontAwesome5 name="calendar" size={20} color="white" style={styles.icon} />
+          <Text style={styles.dateText}>
+            {birthdate ? birthdate.toDateString() : 'Fecha de nacimiento'}
+          </Text>
+        </TouchableOpacity>
+
+        {showDatePicker && (
+          <DateTimePicker
+            value={birthdate || new Date()}
+            mode="date"
+            display="spinner"
+            minimumDate={minDate}
+            maximumDate={maxDate}
+            onChange={handleDateChange}
           />
+        )}
 
-          <Text style={styles.subtitle}>Apellido</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Apellido"
-            value={lastName}
-            onChangeText={setLastName}
-            autoCapitalize="words"
-          />
+        <Text style={styles.subtitle}>Correo electrónico</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Correo electrónico"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
 
-          <TouchableOpacity style={styles.dateContainer} onPress={toggleDatePicker}>
-            <FontAwesome5 name="calendar" size={20} color="white" style={styles.icon} />
-            <Text style={styles.dateText}>
-              {birthdate ? birthdate.toDateString() : 'Fecha de nacimiento'}
-            </Text>
-          </TouchableOpacity>
+        <Text style={styles.subtitle}>Ingresa nueva contraseña</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Contraseña"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+          autoCapitalize="none"
+        />
 
-          {showDatePicker && (
-            <DateTimePicker
-              value={birthdate || new Date()}
-              mode="date"
-              display="spinner"
-              minimumDate={minDate}
-              maximumDate={maxDate}
-              onChange={handleDateChange}
-            />
-          )}
+        <Text style={styles.subtitle}>Repite contraseña</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Repetir contraseña"
+          secureTextEntry
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          autoCapitalize="none"
+        />
 
-          <Text style={styles.subtitle}>Correo electrónico</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Correo electrónico"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-
-          <Text style={styles.subtitle}>Ingresa nueva contraseña</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Contraseña"
-            secureTextEntry
-            value={password}
-            onChangeText={setPassword}
-            autoCapitalize="none"
-          />
-
-          <Text style={styles.subtitle}>Repite contraseña</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Repetir contraseña"
-            secureTextEntry
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-            autoCapitalize="none"
-          />
-
-          <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
-            <Text style={styles.registerText}>Registrarse</Text>
-          </TouchableOpacity>
-        </ScrollView>
-      </TouchableWithoutFeedback>
-    );
+        <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
+          <Text style={styles.registerText}>Registrarse</Text>
+        </TouchableOpacity>
+      </View>
+    </TouchableWithoutFeedback>
+  );
   }
 
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#00425A',
-      paddingTop: 20,
+      paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 70, // Ajusta según tu necesidad
       paddingHorizontal: 20,
     },
+
     logo: {
       fontSize: 24,
       fontWeight: 'bold',

@@ -27,7 +27,7 @@ const AddPlayer = () => {
         <View style={styles.container}>
             <TextInput
                 style={styles.searchInput}
-                placeholder="Buscar jugador..."
+                placeholder="Buscar jugadores..."
                 value={searchQuery}
                 onChangeText={handleSearch}
             />
