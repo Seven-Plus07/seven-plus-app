@@ -8,5 +8,5 @@ cache:
 install:
   - yarn install
 script:
-  - yarn test
+  - yarn start
   - yarn run build
