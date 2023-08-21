@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   optionLabel: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: 'bold',
     color: 'black',
   },
