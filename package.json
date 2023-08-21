@@ -53,7 +53,7 @@
   "jest": {
     "preset": "react-native",
     "transform": {
-      "^.+\\.(js|jsx)$": "node_modules/babel-jest"
+      "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest"
     },
     "transformIgnorePatterns": [
       "node_modules/(?!(jest-)?react-native|@react-native-community|@react-navigation)"
