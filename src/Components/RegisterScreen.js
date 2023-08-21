@@ -167,7 +167,7 @@ function RegisterScreen({navigation}) {
       fontWeight: 'bold',
       color: 'white',
       textAlign: 'left',
-      marginBottom: 20,
+      marginBottom: 14,
     },
     subtitle: {
       fontSize: 18,
@@ -193,7 +193,6 @@ function RegisterScreen({navigation}) {
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 8,
-      marginBottom: 16,
     },
     registerText: {
       color: 'white',

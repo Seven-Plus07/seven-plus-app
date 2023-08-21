@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Provider } from 'react-redux';
-import store from './Store';
+import { useSelector, Provider } from 'react-redux';
+import store from './Store';  // Asumiendo que esta es la ruta correcta a tu Redux store
 import AuthStack from './AuthStack';
 import MainDrawer from './MainDrawer';
 
@@ -12,7 +11,6 @@ const RootStack = createStackNavigator();
 function Navigation() {
   // Usa useSelector para obtener el estado de autenticación desde tu Redux store
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-  const [isInitialLoading, setIsInitialLoading] = useState(true); // Para manejar un posible loading inicial
 
   useEffect(() => {
     // Aquí puedes verificar el estado de autenticación desde AsyncStorage o cualquier otro lugar
@@ -23,9 +21,6 @@ function Navigation() {
     }, 1000); // Puedes eliminar este timeout si no estás haciendo una verificación inicial
   }, []);
 
-  if (isInitialLoading) {
-    return null; // Puedes retornar una pantalla de carga o null si prefieres
-  }
 
   return (
     <Provider store={store}>
@@ -40,4 +35,5 @@ function Navigation() {
 }
 
 export default Navigation;
+
 
