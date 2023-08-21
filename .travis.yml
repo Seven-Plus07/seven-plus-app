@@ -9,3 +9,16 @@ install:
   - yarn install
 script:
   - yarn test
+  - yarn lint
+
+notifications:
+  email:
+    recipients:
+      - mireya08.jav@gmail.com
+    on_success: change  # default is 'change', but you can change it to 'always'
+    on_failure: always  # default is 'always'
+
+after_success:
+  - echo "Tests passed successfully!"
+after_failure:
+  - echo "Tests failed."
