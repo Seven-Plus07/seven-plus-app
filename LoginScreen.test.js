@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
-import LoginScreen from './LoginScreen'; // Ajusta la ruta según corresponda
+import LoginScreen from './src/Components/LoginScreen'; // Ajusta la ruta según corresponda
 
 describe('<LoginScreen />', () => {
   // Test para verificar si el componente se renderiza correctamente
