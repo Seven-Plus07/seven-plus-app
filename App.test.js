@@ -4,8 +4,12 @@ import { Provider as ReduxProvider } from 'react-redux';
 import store from './src/Components/Store';
 import App from './App';
 
-// Mocking the Navigation component to isolate App component tests
-jest.mock('./src/Components/Navigation', () => 'Navigation');
+// Modify the mock to return a Text component with "Navigation" text
+jest.mock('./src/Components/Navigation', () => {
+  return function DummyNavigation() {
+    return <text>Navigation</text>;
+  };
+});
 
 describe('<App />', () => {
   it('renders correctly', () => {
@@ -15,7 +19,6 @@ describe('<App />', () => {
       </ReduxProvider>
     );
 
-    // This will check if the Navigation mock component is rendered within App.
     expect(getByText('Navigation')).toBeDefined();
   });
 
