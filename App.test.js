@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
+import { Text } from 'react-native';
 import { Provider as ReduxProvider } from 'react-redux';
 import store from './src/Components/Store';
 import App from './App';
@@ -7,7 +8,7 @@ import App from './App';
 // Modify the mock to return a Text component with "Navigation" text
 jest.mock('./src/Components/Navigation', () => {
   return function DummyNavigation() {
-    return <text>Navigation</text>;
+    return <Text>Navigation</Text>;
   };
 });
 
@@ -21,6 +22,5 @@ describe('<App />', () => {
 
     expect(getByText('Navigation')).toBeDefined();
   });
-
-  // You can add more tests here depending on the functionality of your app
 });
+
