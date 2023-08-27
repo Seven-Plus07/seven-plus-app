@@ -12,6 +12,7 @@ phases:
 
   build:
     commands:
+      - yarn install  
       - yarn test
       - yarn lint
 
@@ -22,3 +23,7 @@ on_success:
 on_failure:
   commands:
     - echo "Tests failed."
+
+cache:
+  paths:
+    - node_modules/
