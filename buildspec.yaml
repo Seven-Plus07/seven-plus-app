@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - nvm install 16
+
+  build:
+    commands:
+      - yarn install
+      - yarn test
+      - yarn lint
+
+on_success:
+  commands:
+    - echo "Tests passed successfully!"
+
+on_failure:
+  commands:
+    - echo "Tests failed."
