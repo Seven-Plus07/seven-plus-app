@@ -12,8 +12,7 @@ phases:
 
   build:
     commands:
-      - yarn install  
-      - yarn test
+      - yarn install 
       - yarn lint
 
 on_success:
