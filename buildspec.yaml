@@ -14,14 +14,15 @@ phases:
     commands:
       - yarn install 
       - yarn lint
+      - yarn run web
 
 on_success:
   commands:
-    - echo "Tests passed successfully!"
+    - echo "Web build run successfully!"
 
 on_failure:
   commands:
-    - echo "Tests failed."
+    - echo "Web build failed."
 
 cache:
   paths:
