@@ -9,11 +9,12 @@ phases:
   pre_build:
     commands:
       - npm install --global yarn
+      - yarn global add expo-cli
 
   build:
     commands:
       - yarn install 
-      - yarn run build:web
+      - yarn build:web
 
 on_success:
   commands:
