@@ -8,7 +8,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest",
-    "build:web": "expo build:web"
+    "build:web": "npx expo export:web"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
