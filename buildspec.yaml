@@ -1,0 +1,29 @@
+version: 0.2
+install:
+    runtime-versions:
+      nodejs: 16
+      commands:
+      - npm install
+      
+phases:
+  pre_build:
+    commands:
+      - npm install --global yarn
+      - yarn global add expo-cli
+
+  build:
+    commands:
+      - yarn install 
+      - yarn build:web
+
+on_success:
+  commands:
+    - echo "Web build run successfully!"
+
+on_failure:
+  commands:
+    - echo "Web build failed."
+
+cache:
+  paths:
+    - node_modules/
