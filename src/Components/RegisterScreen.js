@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, TouchableWithoutFeedback, Keyboard, Platform, StatusBar } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { Auth } from 'aws-amplify';
 
 
 function RegisterScreen({navigation}) {
@@ -29,22 +30,20 @@ function RegisterScreen({navigation}) {
     }
   };
 
-  const handleRegister = () => {
-
-    const hasNumber = /\d/.test(Password);
+  const handleRegister = async () => {
+    const hasNumber = /\d/.test(password); // Arregla el nombre de la variable
     const hasSpecialCharacter = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password);
 
-    // Validar campos obligatorios
     if (!email || !password || !confirmPassword || !firstName || !lastName || !birthdate) {
       Alert.alert('Error', 'Por favor, complete todos los campos');
       return;
     }
 
-    // Validar que las contraseñas coincidan
     if (password !== confirmPassword) {
       Alert.alert('Error', 'Las contraseñas no coinciden');
       return;
     }
+
     if (password.length < 8) {
       Alert.alert('Error', 'La contraseña debe tener al menos 8 caracteres.');
       return;
@@ -55,8 +54,6 @@ function RegisterScreen({navigation}) {
       return;
     }
 
-
-    // Validar la edad del usuario
     const birthdateDate = new Date(birthdate);
     const age = new Date().getFullYear() - birthdateDate.getFullYear();
     if (age < 12 || age > 100) {
@@ -64,17 +61,30 @@ function RegisterScreen({navigation}) {
       return;
     }
 
-    // Navegar a la pantalla de verificación después de un registro exitoso
-    navigation.navigate('Verification');
+    try {
+      const { user } = await Auth.signUp({
+        username: email,
+        password,
+        attributes: {
+          email,
+          given_name: firstName,
+          family_name: lastName,
+          birthdate: birthdate.toISOString().split('T')[0],
+        },
+      });
 
-    // Implementar lógica de registro aquí
-    // Por ejemplo, puedes enviar los datos a un backend para crear el nuevo usuario
-    console.log('Registrando nuevo usuario...');
-    console.log('Nombre:', firstName);
-    console.log('Apellido:', lastName);
-    console.log('Fecha de nacimiento:', birthdate);
-    console.log('Correo electrónico:', email);
-    console.log('Contraseña:', password);
+      console.log('Registrando nuevo usuario...');
+      console.log('Nombre:', firstName);
+      console.log('Apellido:', lastName);
+      console.log('Fecha de nacimiento:', birthdate);
+      console.log('Correo electrónico:', email);
+      console.log('Contraseña:', password);
+
+      navigation.navigate('Verification'); // Mover esta línea al final de try para asegurar que el usuario se registró antes de navegar
+    } catch (error) {
+      console.error('Error registrando al usuario:', error);
+      Alert.alert('Error', error.message);
+    }
   };
 
   return (
@@ -160,7 +170,7 @@ function RegisterScreen({navigation}) {
     container: {
       flex: 1,
       backgroundColor: '#00425A',
-      paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 70, // Ajusta según tu necesidad
+      paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 70, // Ajustar segun necesidad
       paddingHorizontal: 20,
     },
 

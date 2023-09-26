@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { authenticateUser } from './AuthenticationTest';
 import logoImage from 'SevenPlusAppTfm/assets/logo.png';
+import { Auth } from 'aws-amplify';
 
 function LoginScreen({ navigation }) {
 
@@ -9,12 +9,10 @@ function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const isAuthenticated = authenticateUser(email, password);
-
 
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!email || !password) {
       Alert.alert('Error', 'Por favor, complete todos los campos');
       return;
@@ -27,21 +25,16 @@ function LoginScreen({ navigation }) {
     }
 
     // Verificar credenciales con la función ficticia de autenticación
-    if (isAuthenticated) {
-    // Credenciales válidas, puedes continuar con la lógica de navegación o autenticación
-        console.log('Iniciando sesión como:', email);
-        console.log('Contraseña:', password);
-        setErrorMessage('');
-        navigation.navigate("MainApp");
-        // Aquí puedes agregar la lógica para continuar con la navegación o autenticación
-      } else {
-         // Credenciales inválidas, mostrar mensaje de error
-        setErrorMessage('Correo electrónico o contraseña incorrectos');
-        return;
-     }
-
-    setErrorMessage('');
+    try {
+      await Auth.signIn(email, password);
+      setErrorMessage('');
+      navigation.navigate('MainApp');
+    } catch (error) {
+      console.error('Error signing in', error);
+      setErrorMessage('Correo electrónico o contraseña incorrectos');
+    }
   };
+
 
 
   return (
