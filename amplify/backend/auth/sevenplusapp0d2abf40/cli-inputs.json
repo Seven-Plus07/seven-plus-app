@@ -1,10 +1,10 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "sevenplusappdc596aec_identitypool_dc596aec",
+    "identityPoolName": "sevenplusapp0d2abf40_identitypool_0d2abf40",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "sevenpdc596aec",
-    "userPoolName": "sevenplusappdc596aec_userpool_dc596aec",
+    "resourceNameTruncated": "sevenp0d2abf40",
+    "userPoolName": "sevenplusapp0d2abf40_userpool_0d2abf40",
     "autoVerifiedAttributes": [
       "email"
     ],
@@ -31,10 +31,10 @@
     "userpoolClientReadAttributes": [
       "email"
     ],
-    "userpoolClientLambdaRole": "sevenpdc596aec_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "sevenp0d2abf40_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "dc596aec",
-    "resourceName": "sevenplusappdc596aec",
+    "sharedId": "0d2abf40",
+    "resourceName": "sevenplusapp0d2abf40",
     "authSelections": "identityPoolAndUserPool",
     "useDefault": "default",
     "usernameAttributes": [
