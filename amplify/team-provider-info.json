@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-sevenplusapptfm-dev-195955-authRole",
+      "UnauthRoleArn": "arn:aws:iam::004157558127:role/amplify-sevenplusapptfm-dev-195955-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::004157558127:role/amplify-sevenplusapptfm-dev-195955-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-sevenplusapptfm-dev-195955-deployment",
+      "UnauthRoleName": "amplify-sevenplusapptfm-dev-195955-unauthRole",
+      "StackName": "amplify-sevenplusapptfm-dev-195955",
+      "StackId": "arn:aws:cloudformation:us-east-2:004157558127:stack/amplify-sevenplusapptfm-dev-195955/2cfc8150-5cd1-11ee-a342-0a748a1cfd85",
+      "AmplifyAppId": "d6r9i65444h9k"
+    },
+    "categories": {
+      "auth": {
+        "sevenplusapptfm76a956c4": {}
+      }
+    }
+  }
+}

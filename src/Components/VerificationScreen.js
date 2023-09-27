@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Keyboard  } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { Auth } from 'aws-amplify';
 
-function VerificationScreen({ navigation }) {
+function VerificationScreen({ navigation, route }) {
   const [digits, setDigits] = useState(Array(6).fill(''));
   const inputsRef = useRef([]);
 
@@ -22,9 +23,22 @@ function VerificationScreen({ navigation }) {
     }
   };
 
-  const handleVerify = () => {
-    // Aquí puedes agregar la lógica para verificar el código
+  const handleVerify = async () => {
+    try {
+      // Asume que recibes el nombre de usuario del usuario a través de las propiedades de la ruta
+      const { username } = route.params;
+
+      // Concatena los dígitos para formar el código de verificación completo
+      const code = digits.join('');
+
+      // Usa el método confirmSignUp de Amplify para verificar el código
+      await Auth.confirmSignUp(username, code);
     navigation.navigate('Mis Ligas');
+    }
+     catch (error) {
+      console.error('Error verificando el código:', error);
+      // Maneja el error según sea necesario, por ejemplo, mostrando un mensaje al usuario
+    }
   };
 
   return (

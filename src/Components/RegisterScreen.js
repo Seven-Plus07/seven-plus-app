@@ -66,7 +66,6 @@ function RegisterScreen({navigation}) {
         username: email,
         password,
         attributes: {
-          email,
           given_name: firstName,
           family_name: lastName,
           birthdate: birthdate.toISOString().split('T')[0],
