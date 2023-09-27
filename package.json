@@ -57,6 +57,9 @@
     "metro-react-native-babel-preset": "^0.76.6",
     "react-test-renderer": "^18.2.0"
   },
+  "resolutions": {
+    "@react-native/normalize-colors": "2.1.0"
+  },
   "jest": {
     "verbose": true,
     "preset": "react-native",
