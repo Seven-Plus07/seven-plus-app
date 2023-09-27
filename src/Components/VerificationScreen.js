@@ -33,7 +33,7 @@ function VerificationScreen({ navigation, route }) {
 
       // Usa el método confirmSignUp de Amplify para verificar el código
       await Auth.confirmSignUp(username, code);
-    navigation.navigate('Mis Ligas');
+    navigation.navigate('MainApp');
     }
      catch (error) {
       console.error('Error verificando el código:', error);

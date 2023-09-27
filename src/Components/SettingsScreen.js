@@ -1,13 +1,17 @@
 import React from 'react';
 import { View, Text, Button, Alert, StyleSheet } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons'; // Importa FontAwesome para el icono
+import { FontAwesome } from '@expo/vector-icons';
+import { Auth } from 'aws-amplify';
 
 const SettingsScreen = ({ navigation }) => {
-  const handleLogout = () => {
-    // implementar la lógica de cierre de sesión
-    // Por ejemplo, puedes eliminar tokens de autenticación o limpiar el estado
-    // Luego, navegar de regreso al LoginScreen
-    navigation.navigate('Login');
+  const handleLogout = async () => {
+    try {
+      await Auth.signOut();
+      navigation.navigate('Login');
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+      Alert.alert('Error', 'Error al cerrar sesión');
+    }
   };
 
   return (
@@ -42,4 +46,5 @@ const styles = StyleSheet.create({
 });
 
 export default SettingsScreen;
+
 

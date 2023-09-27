@@ -72,7 +72,7 @@ function RegisterScreen({navigation}) {
         },
 
       })
-      navigation.navigate('Verification');;
+      navigation.navigate('Verification', { username: email });;
 
       console.log('Registrando nuevo usuario...');
       console.log('Nombre:', firstName);
