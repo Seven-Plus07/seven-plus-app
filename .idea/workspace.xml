@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="14852bf6-e651-4112-ba22-c4b805c92268" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Components/ClassificationScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/ClassificationScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/CreateLeague.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/CreateLeague.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/MyLeague.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/MyLeague.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/TeamInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/TeamInfo.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/TeamRegistration.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/TeamRegistration.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +29,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "cidr.known.project.marker": "true",
+    "last_opened_file_path": "C:/Users/mirey/SevenPlusAppTfm",
     "settings.editor.selected.configurable": "AndroidSdkUpdater"
   }
 }]]></component>
