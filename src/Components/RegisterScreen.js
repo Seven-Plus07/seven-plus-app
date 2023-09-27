@@ -62,7 +62,7 @@ function RegisterScreen({navigation}) {
     }
 
     try {
-      const { user } = await Auth.signUp({
+      await Auth.signUp({
         username: email,
         password,
         attributes: {
@@ -71,7 +71,9 @@ function RegisterScreen({navigation}) {
           family_name: lastName,
           birthdate: birthdate.toISOString().split('T')[0],
         },
-      });
+
+      })
+      navigation.navigate('Verification');;
 
       console.log('Registrando nuevo usuario...');
       console.log('Nombre:', firstName);
@@ -79,8 +81,7 @@ function RegisterScreen({navigation}) {
       console.log('Fecha de nacimiento:', birthdate);
       console.log('Correo electrónico:', email);
       console.log('Contraseña:', password);
-
-      navigation.navigate('Verification'); // Mover esta línea al final de try para asegurar que el usuario se registró antes de navegar
+      console.log( Auth.configure() )
     } catch (error) {
       console.error('Error registrando al usuario:', error);
       Alert.alert('Error', error.message);
