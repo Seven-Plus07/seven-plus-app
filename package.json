@@ -58,7 +58,7 @@
     "react-test-renderer": "^18.2.0"
   },
   "resolutions": {
-    "@react-native/normalize-colors": "2.1.0"
+    "@react-native/normalize-colors": "0.72.0"
   },
   "jest": {
     "verbose": true,
