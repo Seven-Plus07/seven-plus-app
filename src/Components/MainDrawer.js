@@ -28,9 +28,9 @@ function MainDrawer() {
         }}
       >
         <Drawer.Screen name="Mis Ligas" component={MyLeaguesScreen} />
+        <Drawer.Screen name="Mi Perfil" component={ProfileScreen} />
         <Drawer.Screen name="Premium" component={PremiumAccessScreen} />
         <Drawer.Screen name="Registro de Equipos" component={TeamRegistration} />
-        <Drawer.Screen name="Mi Perfil" component={ProfileScreen} />
         <Drawer.Screen name="Tienda" component={StoreScreen} />
         <Drawer.Screen name="Invitar amigos" component={InvitationScreen} />
         <Drawer.Screen name="Configuración" component={SettingsScreen} />

@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-
 const MyLeague = ({ navigation }) => {
   return (
     <View style={styles.container}>
+      <Button title="Abrir Menú" onPress={() => navigation.openDrawer()} />
       <Option label="Clasificación" icon="list-ol" navigation={navigation} />
       <Option label="Rankings" icon="trophy" />
       <Option label="Fotos y videos" icon="images" />
@@ -18,12 +18,11 @@ const Option = ({ label, icon, navigation }) => {
     if (label === 'Clasificación' && navigation) {
       navigation.navigate('Classification');
     }
-    // Aquí puedes agregar más condiciones para otras opciones si es necesario
   };
 
   return (
     <TouchableOpacity style={styles.optionContainer} onPress={handlePress}>
-      <FontAwesome5 name={icon} size={24} color="#FFA500" style={styles.icon} />
+      <FontAwesome5 name={icon} size={24} color="#FD2525" style={styles.icon} />
       <Text style={styles.optionLabel}>{label}</Text>
     </TouchableOpacity>
   );
@@ -32,13 +31,14 @@ const Option = ({ label, icon, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#00425A',
     padding: 20,
+    marginTop: 50,
   },
   optionContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#EDEDED',
+    backgroundColor: '#BFDB38',
     padding: 15,
     marginBottom: 10,
     borderRadius: 10,

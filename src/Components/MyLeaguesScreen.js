@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import cupImage from 'SevenPlusAppTfm/assets/cup.png'
+import MyLeague from './MyLeague';
 
-const MyLeaguesScreen = () => {
+
+
+const MyLeaguesScreen = ({ navigation }) => {
+  const [hasLeague, setHasLeague] = useState(false); // Asume que no hay liga creada al inicio
+
   const handleMenuPress = () => {
-    // Aquí puedes implementar la lógica para navegar a la pantalla de opciones del menú
-    // Por ejemplo, puedes utilizar react-navigation para navegar a otra pantalla
+    navigation.openDrawer(); // Abre el Drawer
   };
 
   const handleInscribirsePress = () => {
-    // Aquí puedes implementar la lógica para inscribir al usuario en una liga
-    // Por ejemplo, puedes mostrar un modal o navegar a la pantalla de inscripción
+    // Aquí se implementaria la lógica para inscribir al usuario en una liga
   };
 
   return (
@@ -21,13 +24,17 @@ const MyLeaguesScreen = () => {
       <Text style={styles.headerText}>Seven Plus</Text>
       <Text style={styles.subHeaderText}>Mis Ligas</Text>
 
-      {/* Si el usuario no está inscrito, mostrar la imagen y el botón para inscribirse */}
-      {/* Si ya está inscrito, mostrar las ligas en las que está inscrito */}
+       {hasLeague ? (
+        <MyLeague navigation={navigation} />
+       ) : (
+         <>
       <Image source={cupImage} style={styles.image}
         />
         <TouchableOpacity style={styles.inscribirseButton} onPress={handleInscribirsePress}>
           <Text style={styles.inscribirseButtonText}>Inscríbete a una liga</Text>
         </TouchableOpacity>
+        </>
+      )}
     </View>
   );
 };
