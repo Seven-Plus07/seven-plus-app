@@ -121,10 +121,12 @@ const styles = StyleSheet.create({
         borderColor: '#ccc',
         padding: 10,
         borderRadius: 8,
+        marginTop: 50,
     },
     addButton: {
         backgroundColor: '#FD2525',
         marginLeft: 10,
+        marginTop: 50,
         paddingVertical: 10,
         paddingHorizontal: 15,
         borderRadius: 8,

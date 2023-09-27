@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, TextInput, Button, ScrollView } from 'react-native';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-const Classification = () => {
+const Classification = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [teamName, setTeamName] = useState('');
   const [teams, setTeams] = useState([]);
@@ -34,6 +35,9 @@ const Classification = () => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+            <FontAwesome5 name="chevron-left" size={24} color="#FFF" />
+        </TouchableOpacity>
       <View style={styles.header}>
         <Text style={styles.title}>CLASIFICACION</Text>
         <TouchableOpacity style={styles.addButton} onPress={() => setModalVisible(true)}>
@@ -108,23 +112,34 @@ const Classification = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#00425A',
     padding: 20,
   },
   scrollViewContainer: {
     flex: 1,
     width: '100%',
   },
+  backButton: {
+    position: 'absolute',
+    top: 40,
+    left: 10,
+    padding: 10,
+    zIndex: 2,
+  },
   title: {
-    textAlign: 'left',
+    textAlign: 'center',
     fontSize: 22,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginTop: 50,
+    color: 'white',
   },
   addButton: {
-    backgroundColor: '#FFA500',
+    backgroundColor: '#FD2525',
     padding: 10,
     borderRadius: 5,
     width:'50%',
+    marginTop: 50,
+    marginBottom: 20,
     alignItems: 'right',
   },
   addButtonText: {
@@ -136,25 +151,25 @@ const styles = StyleSheet.create({
     flex: 2,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',  // fondo gris semi-transparente
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    width: '80%',
+    width: '100%',
     padding: 20,
-    backgroundColor: 'white',
-    borderRadius: 12,
+    backgroundColor: '#00425A',
+    borderRadius: 8,
     alignItems: 'center',
   },
   teamName: {
-    fontSize: 18,
-    color: 'black',
+    fontSize: 20,
+    color: 'white',
   },
   errorMessage: {
     color: 'red',
     marginBottom: 10,
   },
   inputContainer: {
-    borderColor: '#EDEDED',
+    borderColor: '#BFDB38',
     borderWidth: 1,
     borderRadius: 5,
     padding: 10,

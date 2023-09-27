@@ -1,11 +1,20 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
 const MyLeague = ({ navigation }) => {
+
+  const handleBackPress = () => {
+    navigation.navigate('MainApp');
+  };
+
   return (
     <View style={styles.container}>
-      <Button title="Abrir Menú" onPress={() => navigation.openDrawer()} />
-      <Option label="Clasificación" icon="list-ol" navigation={navigation} />
+      <TouchableOpacity onPress={handleBackPress} style={styles.backButton}>
+        <FontAwesome5 name="chevron-left" size={24} color="#FFF" />
+      </TouchableOpacity>
+
+      <Option label="Equipos" icon="list-ol" navigation={navigation} />
       <Option label="Rankings" icon="trophy" />
       <Option label="Fotos y videos" icon="images" />
       <Option label="Configuración" icon="cogs" />
@@ -15,7 +24,7 @@ const MyLeague = ({ navigation }) => {
 
 const Option = ({ label, icon, navigation }) => {
   const handlePress = () => {
-    if (label === 'Clasificación' && navigation) {
+    if (label === 'Equipos' && navigation) {
       navigation.navigate('Classification');
     }
   };
@@ -34,6 +43,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#00425A',
     padding: 20,
     marginTop: 50,
+  },
+  backButton: {
+    marginBottom: 20,
+    alignSelf: 'flex-start',
   },
   optionContainer: {
     flexDirection: 'row',
@@ -54,3 +67,4 @@ const styles = StyleSheet.create({
 });
 
 export default MyLeague;
+

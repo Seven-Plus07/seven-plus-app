@@ -16,7 +16,7 @@ const TeamInfo = ({ navigation, route }) => {
   const placeholderLogo = "https://via.placeholder.com/150";
 
   const { teamName, teamIndex } = route.params;
-  const [director, setDirector] = useState(""); // Corregido aquí
+  const [director, setDirector] = useState("");
   const [name, setName] = useState(teamName || "");
   const [updatedTeamName, setUpdatedTeamName] = useState("");
 
@@ -25,7 +25,7 @@ const TeamInfo = ({ navigation, route }) => {
       updatedTeamName: name,
       teamIndex,
     });
-    navigation.goBack();
+    navigation.navigate('TeamRegistration');
   };
 
   const handleCancel = () => {

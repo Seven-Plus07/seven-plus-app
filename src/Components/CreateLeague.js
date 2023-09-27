@@ -51,7 +51,7 @@ const CreateLeague = () => {
       <Text style={styles.subtitle}>Fecha de inicio*</Text>
       <TouchableOpacity onPress={() => setShowStartDatePicker(true)}>
         <View style={styles.dateContainer}>
-          <FontAwesome5 name="calendar" size={20} color="#68707d" style={styles.icon} />
+          <FontAwesome5 name="calendar" size={28} color="#68707d" style={styles.icon} />
           <Text>{startDate.toLocaleDateString()}</Text>
         </View>
       </TouchableOpacity>
@@ -72,7 +72,7 @@ const CreateLeague = () => {
       <Text style={styles.subtitle}>Fecha de finalización*</Text>
       <TouchableOpacity onPress={() => setShowEndDatePicker(true)}>
         <View style={styles.dateContainer}>
-          <FontAwesome5 name="calendar" size={20} color="#68707d" style={styles.icon} />
+          <FontAwesome5 name="calendar" size={28} color="#68707d" style={styles.icon} />
           <Text>{endDate.toLocaleDateString()}</Text>
         </View>
       </TouchableOpacity>
@@ -114,16 +114,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    backgroundColor: '#00425A', // Color de fondo del contenedor
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: 'white', // Color de letra
   },
   subtitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: 'white', // Color de letra
   },
   input: {
     borderWidth: 1,
@@ -131,6 +134,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginBottom: 20,
+    color: 'white', // Color de letra del input
+    backgroundColor: '#00425A', // Color de fondo del input, opcional si deseas que coincida con el fondo del contenedor
   },
   dateContainer: {
     flexDirection: 'row',
@@ -141,6 +146,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginRight: 10,
+    color: 'white', // Color de letra
   },
   datePickerContainer: {
     flexDirection: 'row',
@@ -148,9 +154,11 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
+    color: 'white', // Color del ícono, si es necesario
   },
   inputField: {
     borderWidth: 0,
+    color: 'white', // Color de letra del campo de entrada de fecha
   },
   pickerContainer: {
     flexDirection: 'row',
@@ -161,9 +169,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginRight: 10,
+    color: 'white', // Color de letra
   },
   picker: {
     flex: 1,
+    color: 'white', // Color de letra del picker, si es necesario
   },
   submitButton: {
     backgroundColor: '#fd2525',
@@ -175,8 +185,9 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'white',
+    color: 'white', // Color de letra
   },
 });
+
 
 export default CreateLeague;
