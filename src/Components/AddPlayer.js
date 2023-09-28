@@ -48,7 +48,7 @@ const AddPlayer = ({route, navigation}) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
+        padding: 18,
         backgroundColor: '#f5f5f5',
     },
     searchInput: {
