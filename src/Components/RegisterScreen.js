@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, TouchableWi
 import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Auth } from 'aws-amplify';
+import { useNavigation } from '@react-navigation/native';
 
 
 function RegisterScreen({navigation}) {
@@ -29,6 +30,11 @@ function RegisterScreen({navigation}) {
       setShowDatePicker(false); // Ocultar el calendario después de seleccionar una fecha
     }
   };
+
+  const handleBackPress = () => {
+    navigation.goBack();
+  };
+
 
   const handleRegister = async () => {
     const hasNumber = /\d/.test(password); // Arregla el nombre de la variable
@@ -90,8 +96,10 @@ function RegisterScreen({navigation}) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
+      <TouchableOpacity onPress={handleBackPress} style={styles.backButton}>
+        <FontAwesome5 name="chevron-left" size={24} color="#FFF" />
+      </TouchableOpacity>
         <Text style={styles.logo}>SevenPlus - Registro</Text>
-
         <Text style={styles.subtitle}>Nombre</Text>
         <TextInput
           style={styles.input}
@@ -170,7 +178,7 @@ function RegisterScreen({navigation}) {
     container: {
       flex: 1,
       backgroundColor: '#00425A',
-      paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 70, // Ajustar segun necesidad
+      paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 70,
       paddingHorizontal: 20,
     },
 
@@ -186,7 +194,7 @@ function RegisterScreen({navigation}) {
       fontWeight: 'bold',
       color: 'white',
       textAlign: 'left',
-      marginBottom: 8,
+      marginBottom: 12,
     },
     input: {
       width: '100%',
@@ -196,7 +204,7 @@ function RegisterScreen({navigation}) {
       borderRadius: 8,
       marginBottom: 16,
       paddingHorizontal: 12,
-      color: 'white', // Para que el texto ingresado sea blanco
+      color: 'white',
     },
     registerButton: {
       backgroundColor: '#FD2525',

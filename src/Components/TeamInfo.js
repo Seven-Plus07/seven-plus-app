@@ -1,5 +1,3 @@
-// TeamInfo.js
-
 import React, { useState } from "react";
 import {
   View,
@@ -8,37 +6,29 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
-  Button,
 } from "react-native";
 
 const TeamInfo = ({ navigation, route }) => {
-  // Usando un placeholder para el logo del equipo por ahora
   const placeholderLogo = "https://via.placeholder.com/150";
 
   const { teamName, teamIndex } = route.params;
   const [director, setDirector] = useState("");
-  const [name, setName] = useState(teamName || "");
-  const [updatedTeamName, setUpdatedTeamName] = useState("");
+  const [updatedTeamName, setUpdatedTeamName] = useState(teamName || "");
+
+  const dummyPlayers = ["Jugador 1", "Jugador 2"];
+  const dummyStaff = ["Staff 1", "Staff 2"];
 
   const handleSave = () => {
-    navigation.setParams({
-      updatedTeamName: name,
-      teamIndex,
-    });
-    navigation.navigate('TeamRegistration');
+    // Logica para guardar
   };
 
   const handleCancel = () => {
-    navigation.goBack();
+    navigation.navigate('TeamRegistration');
   };
 
   return (
     <View style={styles.container}>
-      <Image
-        source={{ uri: placeholderLogo }}
-        style={styles.teamLogo}
-        resizeMode="contain"
-      />
+      <Image source={{ uri: placeholderLogo }} style={styles.teamLogo} resizeMode="contain" />
       <Text style={styles.label}>Nombre del Equipo</Text>
       <TextInput
         style={styles.input}
@@ -53,17 +43,28 @@ const TeamInfo = ({ navigation, route }) => {
         onChangeText={setDirector}
         placeholder="Director Técnico"
       />
-      <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Jugadores</Text>
+
+      <Text style={styles.subtitle}>Jugadores</Text>
+      {dummyPlayers.map((player, index) => (
+        <Text key={index} style={styles.listItem}>
+          {player}
+        </Text>
+      ))}
+
+      <Text style={styles.subtitle}>Equipo Técnico</Text>
+      {dummyStaff.map((staff, index) => (
+        <Text key={index} style={styles.listItem}>
+          {staff}
+        </Text>
+      ))}
+
+      <View style={styles.footerButtonContainer}>
+        <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+          <Text style={styles.buttonText}>Guardar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Equipo Técnico</Text>
+        <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
+          <Text style={styles.buttonText}>Cancelar</Text>
         </TouchableOpacity>
-        <View style={styles.buttonContainer}>
-          <Button title="Guardar" onPress={handleSave} />
-          <Button title="Cancelar" onPress={handleCancel} />
-        </View>
       </View>
     </View>
   );
@@ -80,6 +81,7 @@ const styles = StyleSheet.create({
     height: 150,
     alignSelf: "flex-start",
     marginBottom: 20,
+    marginTop: 60,
   },
   input: {
     borderWidth: 1,
@@ -91,30 +93,53 @@ const styles = StyleSheet.create({
     color: "white",
   },
   label: {
-    fontSize: 16,
+    fontSize: 22,
     fontWeight: "bold",
     marginBottom: 10,
     color: "white",
-  },
-  buttonsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 20,
   },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 24,
   },
-  button: {
+  footerButtonContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 16,
+    backgroundColor: '#00425A',
+  },
+  saveButton: {
     padding: 10,
-    backgroundColor: "#FD2525",
+    backgroundColor: "#4CAF50",
+    borderRadius: 8,
+    flex: 0.48,
+  },
+  cancelButton: {
+    padding: 10,
+    backgroundColor: "#f44336",
     borderRadius: 8,
     flex: 0.48,
   },
   buttonText: {
     color: "white",
     textAlign: "center",
+  },
+  subtitle: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "white",
+    marginTop: 16,
+  },
+  listItem: {
+    fontSize: 16,
+    color: "#BFDB38",
+    marginLeft: 16,
+    paddingTop: 5,
   },
 });
 

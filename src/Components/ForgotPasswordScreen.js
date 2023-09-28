@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
 import ForgotPasswordImage from 'SevenPlusAppTfm/assets/ForgotPassword.png'
 import { useNavigation } from '@react-navigation/native';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
 
 function ForgotPasswordScreen(){
   const [email, setEmail] = useState('');
@@ -25,8 +27,15 @@ function ForgotPasswordScreen(){
     navigation.navigate('Reset Password');
   };
 
+  const handleBackPress = () => {
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={handleBackPress} style={styles.backButton}>
+        <FontAwesome5 name="chevron-left" size={24} color="#FFF" />
+      </TouchableOpacity>
        <Image source={ForgotPasswordImage} style={styles.image}
        />
       <Text style={styles.logo}>SevenPlus - Olvidaste tu contraseña?</Text>
@@ -73,6 +82,17 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 16,
     paddingHorizontal: 12,
+  },
+  backButton: {
+    position: 'absolute',
+    top: 50,
+    left: 10,
+    padding: 10,
+    zIndex: 2,
+  },
+  backIcon: {
+    width: 28,
+    height: 28,
   },
   forgotPasswordButton: {
     backgroundColor: '#FD2525',

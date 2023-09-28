@@ -95,7 +95,7 @@ function ProfileScreen() {
             <FontAwesome5
               name="calendar"
               size={20}
-              color="#68707d"
+              color="#FD2525"
               style={styles.icon}
             />
             {showDatePicker ? (
@@ -126,19 +126,20 @@ function ProfileScreen() {
                   flex: 1,
                   justifyContent: "center",
                   alignItems: "center",
+                  margintop: 30,
                   backgroundColor: "rgba(0, 0, 0, 0.5)", // Fondo semitransparente
                 }}
               >
                 <View
                   style={{
-                    width: 200,
-                    height: 200,
+                    width: "80%",
                     backgroundColor: "#00425A",
                     borderRadius: 10,
+                    padding: 10, // Agregar padding
                   }}
                 >
                   <Picker
-                    style={{ width: '100%', height: '100%' }}
+                    style={{ width: "100%", color: "white" }}
                     selectedValue={role}
                     onValueChange={(itemValue) => {
                       setRole(itemValue);
@@ -162,13 +163,13 @@ function ProfileScreen() {
               </View>
             </Modal>
           )}
-
           <Text style={styles.inputLabel}>Rol</Text>
           <TouchableOpacity
             onPress={() => setPickerVisible(true)}
             style={styles.input}
           >
-            <Text>{role ? role : "Selecciona un rol"}</Text>
+            <Text style={{ color: 'white', textAlign: 'left', marginTop: 10, }}>
+              {role ? role : "Selecciona un rol"}</Text>
           </TouchableOpacity>
           <Text style={styles.inputLabel}>País</Text>
           <TextInput
@@ -215,9 +216,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#BFDB38",
     borderRadius: 8,
-    marginBottom: 16,
-    paddingHorizontal: 12,
+    marginBottom: 18,
+    paddingHorizontal: 18,
     color: "white",
+    paddingLeft: 10,
   },
   saveButton: {
     backgroundColor: "#FD2525",
@@ -248,7 +250,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginRight: 10,
-    color: 'whit'
+    color: "white",
   },
   datePickerContainer: {
     flexDirection: "row",

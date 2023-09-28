@@ -36,8 +36,15 @@ const CreateLeague = () => {
     navigation.navigate('MyLeague');
   };
 
+  const handleBackPress = () => {
+    navigation.navigate('MainApp');
+  };
+
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={handleBackPress} style={styles.backButton}>
+        <FontAwesome5 name="chevron-left" size={24} color="#FFF" />
+      </TouchableOpacity>
       <Text style={styles.title}>Nueva Liga</Text>
 
       <Text style={styles.subtitle}>Nombre de la liga*</Text>
@@ -115,6 +122,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#00425A', // Color de fondo del contenedor
+  },
+  backButton: {
+    marginBottom: 10,
+    marginTop: 30,
+    alignSelf: 'flex-start',
   },
   title: {
     fontSize: 24,
