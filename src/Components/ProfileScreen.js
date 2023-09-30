@@ -16,6 +16,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { Picker } from "@react-native-picker/picker";
 import ImagePicker from "react-native-image-picker";
+import { Storage } from "@aws-amplify/storage";
 
 function ProfileScreen() {
   const [birthdate, setBirthdate] = useState(new Date());
@@ -25,12 +26,37 @@ function ProfileScreen() {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [isPickerVisible, setPickerVisible] = useState(false);
 
-  const handleSaveChanges = () => {
+  const handleSaveChanges = async () => {
     console.log("Guardando cambios...");
     console.log("Fecha de nacimiento:", birthdate);
     console.log("Rol:", role);
     console.log("País:", country);
     console.log("Alias:", alias);
+
+    // Almacena los datos en un archivo en un bucket de S3
+    const data = {
+      Nombre: "Tu Nombre",
+      Apellido: "Tu Apellido",
+      Edad: 30, // Tu edad
+      Sexo: "Masculino", // Tu género
+      Posición: role === "Jugador" ? "Portero" : "", // Determina la posición en función del rol
+      Defensa: role === "Jugador" ? "Defensa central, lateral, libre y carrilero" : "",
+      Centrocampista: role === "Jugador" ? "Pivote, media punta, volante e interior" : "",
+      Delantero: role === "Jugador" ? "Segundo delantero, delantero centro y extremo" : "",
+    };
+
+    try {
+      // Almacena los datos en un archivo en el bucket de S3
+      await Storage.put("profile-data.txt", JSON.stringify(data), {
+        level: "protected",
+        contentType: "text/plain",
+      });
+
+      // Navega hacia atrás
+      // Inserta aquí el código para navegar hacia atrás si estás utilizando una librería de navegación
+    } catch (error) {
+      console.error("Error al guardar datos en S3:", error);
+    }
   };
 
   const onChangeDate = (event, selectedDate) => {
