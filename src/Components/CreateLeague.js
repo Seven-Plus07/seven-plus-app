@@ -4,7 +4,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Picker} from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
-
+import { Storage } from "@aws-amplify/storage";
 
 const CreateLeague = () => {
   const [leagueName, setLeagueName] = useState('');
@@ -15,30 +15,52 @@ const CreateLeague = () => {
   const [phase, setPhase] = useState('');
   const navigation = useNavigation();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const currentDate = new Date();
     // Validación: El nombre de la liga no debe estar vacío
     if (!leagueName.trim()) {
-    alert("Por favor, ingresa el nombre de la liga.");
-    return;
+      alert("Por favor, ingresa el nombre de la liga.");
+      return;
     }
-     // Validación: La fecha de inicio no debe ser anterior a la fecha actual
+    // Validación: La fecha de inicio no debe ser anterior a la fecha actual
     if (startDate < currentDate.setHours(0, 0, 0, 0)) {  // Se resetean horas, minutos, segundos y milisegundos a 0 para solo comparar la fecha.
-    alert("La fecha de inicio no puede ser anterior a la fecha actual.");
-    return;
+      alert("La fecha de inicio no puede ser anterior a la fecha actual.");
+      return;
     }
-  // Validación: No debe seleccionar la opción "Seleccionar fase"
+    // Validación: No debe seleccionar la opción "Seleccionar fase"
     if (phase === "Seleccione una de las opciones") {
-    alert("Por favor, selecciona una fase válida.");
-    return;
+      alert("Por favor, selecciona una fase válida.");
+      return;
     }
 
-    navigation.navigate('MyLeague');
+    try {
+      const leagueData = {
+        name: leagueName,
+        startDate: startDate.toISOString(), // Convierte la fecha a formato ISO
+        endDate: endDate.toISOString(),
+        phase,
+      };
+      await Storage.put('liga-info.txt', JSON.stringify(leagueData), {
+        level: 'protected', // Opcional: ajusta los permisos según tu configuración
+        contentType: 'text/plain', // Tipo de contenido del archivo
+      });
+
+      // La información se ha guardado en S3 con éxito
+      alert('La información de la liga se ha guardado en S3 con éxito.');
+     // Navegar a la pantalla MyLeague
+      navigation.navigate('MyLeague');
+    } catch (error) {
+      console.error('Error al guardar datos en S3:', error);
+      // Manejar el error, mostrar un mensaje de error, etc.
+    }
   };
 
   const handleBackPress = () => {
     navigation.navigate('MainApp');
   };
+
+
+
 
   return (
     <View style={styles.container}>
