@@ -10,6 +10,7 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
+  Image,
   Modal,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -21,41 +22,35 @@ import { Storage } from "@aws-amplify/storage";
 function ProfileScreen() {
   const [birthdate, setBirthdate] = useState(new Date());
   const [role, setRole] = useState("");
-  const [country, setCountry] = useState("");
-  const [alias, setAlias] = useState("");
   const [name, setName] = useState(""); // Estado para el nombre
   const [lastName, setLastName] = useState(""); // Estado para el apellido
   const [age, setAge] = useState(""); // Estado para la edad
   const [gender, setGender] = useState(""); // Estado para el sexo
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [isPickerVisible, setPickerVisible] = useState(false);
 
   const handleSaveChanges = async () => {
     console.log("Guardando cambios...");
     console.log("Fecha de nacimiento:", birthdate);
     console.log("Rol:", role);
-    console.log("País:", country);
-    console.log("Alias:", alias);
+    console.log("Nombre:", name);
+    console.log("Apellido:", lastName);
+    console.log("Edad:", age);
+    console.log("Sexo:", gender);
 
-    const handleSaveChanges = async () => {
-      console.log("Guardando cambios...");
-      console.log("Fecha de nacimiento:", birthdate);
-      console.log("Rol:", role);
-      console.log("País:", country);
-      console.log("Alias:", alias);
-      console.log("Nombre:", name);
-      console.log("Apellido:", lastName);
-      console.log("Edad:", age);
-      console.log("Sexo:", gender);
-
-
+    const data = {
+      Rol: role,
+      Nombre: name,
+      Apellido: lastName,
+      Edad: age,
+      Sexo: gender,
+    };
     try {
       // Almacena los datos en un archivo en el bucket de S3
       await Storage.put("profile-data.txt", JSON.stringify(data), {
         level: "protected",
         contentType: "text/plain",
       });
-
-      // Navega hacia atrás
-      // Inserta aquí el código para navegar hacia atrás si estás utilizando una librería de navegación
     } catch (error) {
       console.error("Error al guardar datos en S3:", error);
     }
@@ -79,14 +74,31 @@ function ProfileScreen() {
       },
     };
 
-    ImagePicker.showImagePicker(options, (response) => {
+    ImagePicker.showImagePicker(options, async (response) => {
       if (response.didCancel) {
         console.log("User cancelled image picker");
       } else if (response.error) {
         console.log("ImagePicker Error: ", response.error);
       } else {
-        const source = { uri: response.uri };
-        setAvatarSource(source);
+        const { uri } = response;
+        const fileName = `profile-${Date.now()}.jpg`; // Nombre de archivo único
+
+        try {
+          // Subir la imagen al bucket de S3
+          const result = await Storage.put(fileName, uri, {
+            level: "protected", // Ajusta esto según tus necesidades
+            contentType: "image/jpeg", // Ajusta el tipo de contenido según el formato de la imagen
+          });
+
+          // `result.key` contiene la clave del objeto en S3, que puedes almacenar en tu base de datos si es necesario
+
+          const source = { uri: uri };
+          setAvatarSource(source); // Actualiza la fuente de la imagen de perfil
+
+          console.log("Imagen almacenada en S3 con éxito:", result.key);
+        } catch (error) {
+          console.error("Error al subir imagen a S3:", error);
+        }
       }
     });
   };
@@ -108,7 +120,8 @@ function ProfileScreen() {
               <FontAwesome5 name="user-circle" size={80} color="white" />
             ) : (
               <View style={styles.avatarContainer}>
-                <Image style={styles.avatar} source={avatarSource} />
+                <Image style={styles.avatar} source={avatarSource} />{" "}
+                {/* Mostrar la imagen de perfil */}
                 <FontAwesome5
                   name="camera"
                   size={20}
@@ -196,37 +209,38 @@ function ProfileScreen() {
             onPress={() => setPickerVisible(true)}
             style={styles.input}
           >
-            <Text style={{ color: 'white', textAlign: 'left', marginTop: 10, }}>
-              {role ? role : "Selecciona un rol"}</Text>
+            <Text style={{ color: "white", textAlign: "left", marginTop: 10 }}>
+              {role ? role : "Selecciona un rol"}
+            </Text>
           </TouchableOpacity>
           <Text style={styles.inputLabel}>Nombre</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Nombre"
-        value={name}
-        onChangeText={setName} // Manejo del estado del nombre
-      />
-      <Text style={styles.inputLabel}>Apellido</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Apellido"
-        value={lastName}
-        onChangeText={setLastName} // Manejo del estado del apellido
-      />
-      <Text style={styles.inputLabel}>Edad</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Edad"
-        value={age}
-        onChangeText={setAge} // Manejo del estado de la edad
-      />
-      <Text style={styles.inputLabel}>Sexo</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Sexo"
-        value={gender}
-        onChangeText={setGender} // Manejo del estado del sexo
-      />
+          <TextInput
+            style={styles.input}
+            placeholder="Nombre"
+            value={name}
+            onChangeText={setName} // Manejo del estado del nombre
+          />
+          <Text style={styles.inputLabel}>Apellido</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Apellido"
+            value={lastName}
+            onChangeText={setLastName} // Manejo del estado del apellido
+          />
+          <Text style={styles.inputLabel}>Edad</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Edad"
+            value={age}
+            onChangeText={setAge} // Manejo del estado de la edad
+          />
+          <Text style={styles.inputLabel}>Sexo</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Sexo"
+            value={gender}
+            onChangeText={setGender} // Manejo del estado del sexo
+          />
           <TouchableOpacity
             style={styles.saveButton}
             onPress={handleSaveChanges}
@@ -236,7 +250,7 @@ function ProfileScreen() {
         </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
-  );}
+  );
 }
 
 const styles = StyleSheet.create({
