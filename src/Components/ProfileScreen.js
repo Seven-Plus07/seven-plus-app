@@ -17,7 +17,8 @@ import {
 import DateTimePicker from "@react-native-community/datetimepicker";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { Picker } from "@react-native-picker/picker";
-import ImagePicker from "react-native-image-picker";
+//import ImagePicker from "react-native-image-picker";
+import * as ImagePicker from 'react-native-image-picker';
 import { Storage } from "@aws-amplify/storage";
 
 function ProfileScreen() {
