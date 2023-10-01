@@ -75,7 +75,7 @@ function ProfileScreen() {
       },
     };
 
-    ImagePicker.showImagePicker(options, async (response) => {
+    ImagePicker.launchImageLibrary(options, async (response) => {
       if (response.didCancel) {
         console.log("Usuario canceló la selección de imagen");
       } else if (response.error) {
