@@ -12,6 +12,7 @@ import {
   Keyboard,
   Image,
   Modal,
+  Alert, // Importa Alert
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
@@ -22,12 +23,13 @@ import { Storage } from "@aws-amplify/storage";
 function ProfileScreen() {
   const [birthdate, setBirthdate] = useState(new Date());
   const [role, setRole] = useState("");
-  const [name, setName] = useState(""); // Estado para el nombre
-  const [lastName, setLastName] = useState(""); // Estado para el apellido
-  const [age, setAge] = useState(""); // Estado para la edad
-  const [gender, setGender] = useState(""); // Estado para el sexo
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [isPickerVisible, setPickerVisible] = useState(false);
+  const [avatarSource, setAvatarSource] = useState(null);
 
   const handleSaveChanges = async () => {
     console.log("Guardando cambios...");
@@ -45,8 +47,8 @@ function ProfileScreen() {
       Edad: age,
       Sexo: gender,
     };
+
     try {
-      // Almacena los datos en un archivo en el bucket de S3
       await Storage.put("profile-data.txt", JSON.stringify(data), {
         level: "protected",
         contentType: "text/plain",
@@ -63,8 +65,6 @@ function ProfileScreen() {
     }
   };
 
-  const [avatarSource, setAvatarSource] = useState(null);
-
   const selectPhotoTapped = () => {
     const options = {
       title: "Selecciona una foto",
@@ -76,24 +76,21 @@ function ProfileScreen() {
 
     ImagePicker.showImagePicker(options, async (response) => {
       if (response.didCancel) {
-        console.log("User cancelled image picker");
+        console.log("Usuario canceló la selección de imagen");
       } else if (response.error) {
-        console.log("ImagePicker Error: ", response.error);
+        console.log("Error al seleccionar imagen: ", response.error);
       } else {
         const { uri } = response;
-        const fileName = `profile-${Date.now()}.jpg`; // Nombre de archivo único
+        const fileName = `profile-${Date.now()}.jpg`;
 
         try {
-          // Subir la imagen al bucket de S3
           const result = await Storage.put(fileName, uri, {
-            level: "protected", // Ajusta esto según tus necesidades
-            contentType: "image/jpeg", // Ajusta el tipo de contenido según el formato de la imagen
+            level: "protected",
+            contentType: "image/jpeg",
           });
 
-          // `result.key` contiene la clave del objeto en S3, que puedes almacenar en tu base de datos si es necesario
-
           const source = { uri: uri };
-          setAvatarSource(source); // Actualiza la fuente de la imagen de perfil
+          setAvatarSource(source);
 
           console.log("Imagen almacenada en S3 con éxito:", result.key);
         } catch (error) {
@@ -120,8 +117,7 @@ function ProfileScreen() {
               <FontAwesome5 name="user-circle" size={80} color="white" />
             ) : (
               <View style={styles.avatarContainer}>
-                <Image style={styles.avatar} source={avatarSource} />{" "}
-                {/* Mostrar la imagen de perfil */}
+                <Image style={styles.avatar} source={avatarSource} />
                 <FontAwesome5
                   name="camera"
                   size={20}
@@ -167,8 +163,8 @@ function ProfileScreen() {
                   flex: 1,
                   justifyContent: "center",
                   alignItems: "center",
-                  margintop: 30,
-                  backgroundColor: "rgba(0, 0, 0, 0.5)", // Fondo semitransparente
+                  margin: 30, // Cambio "margintop" a "margin"
+                  backgroundColor: "rgba(0, 0, 0, 0.5)",
                 }}
               >
                 <View
@@ -176,7 +172,7 @@ function ProfileScreen() {
                     width: "80%",
                     backgroundColor: "#00425A",
                     borderRadius: 10,
-                    padding: 10, // Agregar padding
+                    padding: 10,
                   }}
                 >
                   <Picker
@@ -218,28 +214,28 @@ function ProfileScreen() {
             style={styles.input}
             placeholder="Nombre"
             value={name}
-            onChangeText={setName} // Manejo del estado del nombre
+            onChangeText={setName}
           />
           <Text style={styles.inputLabel}>Apellido</Text>
           <TextInput
             style={styles.input}
             placeholder="Apellido"
             value={lastName}
-            onChangeText={setLastName} // Manejo del estado del apellido
+            onChangeText={setLastName}
           />
           <Text style={styles.inputLabel}>Edad</Text>
           <TextInput
             style={styles.input}
             placeholder="Edad"
             value={age}
-            onChangeText={setAge} // Manejo del estado de la edad
+            onChangeText={setAge}
           />
           <Text style={styles.inputLabel}>Sexo</Text>
           <TextInput
             style={styles.input}
             placeholder="Sexo"
             value={gender}
-            onChangeText={setGender} // Manejo del estado del sexo
+            onChangeText={setGender}
           />
           <TouchableOpacity
             style={styles.saveButton}
