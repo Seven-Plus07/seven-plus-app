@@ -23,8 +23,10 @@ function ProfileScreen() {
   const [role, setRole] = useState("");
   const [country, setCountry] = useState("");
   const [alias, setAlias] = useState("");
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [isPickerVisible, setPickerVisible] = useState(false);
+  const [name, setName] = useState(""); // Estado para el nombre
+  const [lastName, setLastName] = useState(""); // Estado para el apellido
+  const [age, setAge] = useState(""); // Estado para la edad
+  const [gender, setGender] = useState(""); // Estado para el sexo
 
   const handleSaveChanges = async () => {
     console.log("Guardando cambios...");
@@ -33,17 +35,17 @@ function ProfileScreen() {
     console.log("País:", country);
     console.log("Alias:", alias);
 
-    // Almacena los datos en un archivo en un bucket de S3
-    const data = {
-      Nombre: "Tu Nombre",
-      Apellido: "Tu Apellido",
-      Edad: 30, // Tu edad
-      Sexo: "Masculino", // Tu género
-      Posición: role === "Jugador" ? "Portero" : "", // Determina la posición en función del rol
-      Defensa: role === "Jugador" ? "Defensa central, lateral, libre y carrilero" : "",
-      Centrocampista: role === "Jugador" ? "Pivote, media punta, volante e interior" : "",
-      Delantero: role === "Jugador" ? "Segundo delantero, delantero centro y extremo" : "",
-    };
+    const handleSaveChanges = async () => {
+      console.log("Guardando cambios...");
+      console.log("Fecha de nacimiento:", birthdate);
+      console.log("Rol:", role);
+      console.log("País:", country);
+      console.log("Alias:", alias);
+      console.log("Nombre:", name);
+      console.log("Apellido:", lastName);
+      console.log("Edad:", age);
+      console.log("Sexo:", gender);
+
 
     try {
       // Almacena los datos en un archivo en el bucket de S3
@@ -197,20 +199,34 @@ function ProfileScreen() {
             <Text style={{ color: 'white', textAlign: 'left', marginTop: 10, }}>
               {role ? role : "Selecciona un rol"}</Text>
           </TouchableOpacity>
-          <Text style={styles.inputLabel}>País</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="País"
-            value={country}
-            onChangeText={setCountry}
-          />
-          <Text style={styles.inputLabel}>Alias</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Alias"
-            value={alias}
-            onChangeText={setAlias}
-          />
+          <Text style={styles.inputLabel}>Nombre</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Nombre"
+        value={name}
+        onChangeText={setName} // Manejo del estado del nombre
+      />
+      <Text style={styles.inputLabel}>Apellido</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Apellido"
+        value={lastName}
+        onChangeText={setLastName} // Manejo del estado del apellido
+      />
+      <Text style={styles.inputLabel}>Edad</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Edad"
+        value={age}
+        onChangeText={setAge} // Manejo del estado de la edad
+      />
+      <Text style={styles.inputLabel}>Sexo</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Sexo"
+        value={gender}
+        onChangeText={setGender} // Manejo del estado del sexo
+      />
           <TouchableOpacity
             style={styles.saveButton}
             onPress={handleSaveChanges}
@@ -220,7 +236,7 @@ function ProfileScreen() {
         </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
-  );
+  );}
 }
 
 const styles = StyleSheet.create({
