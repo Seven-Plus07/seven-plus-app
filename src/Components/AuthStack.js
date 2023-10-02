@@ -15,6 +15,7 @@ import TeamRegistration from './TeamRegistration';
 import TeamInfo from './TeamInfo';
 import SubscriptionScreen from './SubscriptionScreen'
 import NoAdsScreen from './NoAdsScreen';
+import MyCreatedLeaguesScreen from './MyCreatedLeaguesScreen'
 
 
 const Stack = createStackNavigator();
@@ -36,6 +37,7 @@ const AuthStack = () => {
       <Stack.Screen name="TeamRegistration" component={TeamRegistration} />
       <Stack.Screen name="TeamInfo" component={TeamInfo} />
       <Stack.Screen name="SubscriptionScreen" component={SubscriptionScreen} />
+      <Stack.Screen name="MyCreatedLeaguesScreen" component={MyCreatedLeaguesScreen} />
       <Stack.Screen name="NoAdsScreen" component={NoAdsScreen} />
     </Stack.Navigator>
   );

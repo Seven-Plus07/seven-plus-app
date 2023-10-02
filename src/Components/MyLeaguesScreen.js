@@ -13,7 +13,7 @@ const MyLeaguesScreen = ({ navigation }) => {
   };
 
   const handleInscribirsePress = () => {
-    // Aquí se implementaria la lógica para inscribir al usuario en una liga
+      navigation.navigate('MyCreatedLeaguesScreen'); // Navega a la nueva pantalla
   };
 
   return (

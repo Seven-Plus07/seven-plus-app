@@ -10,27 +10,53 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
+  Image,
   Modal,
+  Alert, // Importa Alert
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { Picker } from "@react-native-picker/picker";
-import ImagePicker from "react-native-image-picker";
+//import ImagePicker from "react-native-image-picker";
+import * as ImagePicker from 'react-native-image-picker';
+import { Storage } from "@aws-amplify/storage";
 
 function ProfileScreen() {
   const [birthdate, setBirthdate] = useState(new Date());
   const [role, setRole] = useState("");
-  const [country, setCountry] = useState("");
-  const [alias, setAlias] = useState("");
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [isPickerVisible, setPickerVisible] = useState(false);
+  const [avatarSource, setAvatarSource] = useState(null);
 
-  const handleSaveChanges = () => {
+  const handleSaveChanges = async () => {
     console.log("Guardando cambios...");
     console.log("Fecha de nacimiento:", birthdate);
     console.log("Rol:", role);
-    console.log("País:", country);
-    console.log("Alias:", alias);
+    console.log("Nombre:", name);
+    console.log("Apellido:", lastName);
+    console.log("Edad:", age);
+    console.log("Sexo:", gender);
+
+    const data = {
+      Rol: role,
+      Nombre: name,
+      Apellido: lastName,
+      Edad: age,
+      Sexo: gender,
+    };
+
+    try {
+      await Storage.put("profile-data.txt", JSON.stringify(data), {
+        level: "protected",
+        contentType: "text/plain",
+      });
+    } catch (error) {
+      console.error("Error al guardar datos en S3:", error);
+    }
   };
 
   const onChangeDate = (event, selectedDate) => {
@@ -39,8 +65,6 @@ function ProfileScreen() {
       setBirthdate(selectedDate);
     }
   };
-
-  const [avatarSource, setAvatarSource] = useState(null);
 
   const selectPhotoTapped = () => {
     const options = {
@@ -51,14 +75,28 @@ function ProfileScreen() {
       },
     };
 
-    ImagePicker.showImagePicker(options, (response) => {
+    ImagePicker.launchImageLibrary(options, async (response) => {
       if (response.didCancel) {
-        console.log("User cancelled image picker");
+        console.log("Usuario canceló la selección de imagen");
       } else if (response.error) {
-        console.log("ImagePicker Error: ", response.error);
+        console.log("Error al seleccionar imagen: ", response.error);
       } else {
-        const source = { uri: response.uri };
-        setAvatarSource(source);
+        const { uri } = response;
+        const fileName = `profile-${Date.now()}.jpg`;
+
+        try {
+          const result = await Storage.put(fileName, uri, {
+            level: "protected",
+            contentType: "image/jpeg",
+          });
+
+          const source = { uri: uri };
+          setAvatarSource(source);
+
+          console.log("Imagen almacenada en S3 con éxito:", result.key);
+        } catch (error) {
+          console.error("Error al subir imagen a S3:", error);
+        }
       }
     });
   };
@@ -126,8 +164,8 @@ function ProfileScreen() {
                   flex: 1,
                   justifyContent: "center",
                   alignItems: "center",
-                  margintop: 30,
-                  backgroundColor: "rgba(0, 0, 0, 0.5)", // Fondo semitransparente
+                  margin: 30, // Cambio "margintop" a "margin"
+                  backgroundColor: "rgba(0, 0, 0, 0.5)",
                 }}
               >
                 <View
@@ -135,7 +173,7 @@ function ProfileScreen() {
                     width: "80%",
                     backgroundColor: "#00425A",
                     borderRadius: 10,
-                    padding: 10, // Agregar padding
+                    padding: 10,
                   }}
                 >
                   <Picker
@@ -168,22 +206,37 @@ function ProfileScreen() {
             onPress={() => setPickerVisible(true)}
             style={styles.input}
           >
-            <Text style={{ color: 'white', textAlign: 'left', marginTop: 10, }}>
-              {role ? role : "Selecciona un rol"}</Text>
+            <Text style={{ color: "white", textAlign: "left", marginTop: 10 }}>
+              {role ? role : "Selecciona un rol"}
+            </Text>
           </TouchableOpacity>
-          <Text style={styles.inputLabel}>País</Text>
+          <Text style={styles.inputLabel}>Nombre</Text>
           <TextInput
             style={styles.input}
-            placeholder="País"
-            value={country}
-            onChangeText={setCountry}
+            placeholder="Nombre"
+            value={name}
+            onChangeText={setName}
           />
-          <Text style={styles.inputLabel}>Alias</Text>
+          <Text style={styles.inputLabel}>Apellido</Text>
           <TextInput
             style={styles.input}
-            placeholder="Alias"
-            value={alias}
-            onChangeText={setAlias}
+            placeholder="Apellido"
+            value={lastName}
+            onChangeText={setLastName}
+          />
+          <Text style={styles.inputLabel}>Edad</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Edad"
+            value={age}
+            onChangeText={setAge}
+          />
+          <Text style={styles.inputLabel}>Sexo</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Sexo"
+            value={gender}
+            onChangeText={setGender}
           />
           <TouchableOpacity
             style={styles.saveButton}

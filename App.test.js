@@ -1,26 +1,30 @@
+// Mock de aws-amplify
+jest.mock('aws-amplify', () => ({
+  Amplify: {
+    Logger: {
+      LOG_LEVEL: 'DEBUG',
+    },
+    configure: jest.fn(),
+  },
+}));
+
+// Mock de @react-native-community/netinfo
+jest.mock('@react-native-community/netinfo', () => ({
+  fetch: jest.fn(() => Promise.resolve({
+    isConnected: true,
+  })),
+}));
+
 import React from 'react';
-import { render } from '@testing-library/react-native';
-import { Text } from 'react-native';
-import { Provider as ReduxProvider } from 'react-redux';
-import store from './src/Components/Store';
+import renderer from 'react-test-renderer';
 import App from './App';
 
-// Modify the mock to return a Text component with "Navigation" text
-jest.mock('./src/Components/Navigation', () => {
-  return function DummyNavigation() {
-    return <Text>Navigation</Text>;
-  };
-});
+jest.mock('./src/aws-exports', () => ({}));
+jest.mock('./src/Components/Navigation', () => 'Navigation');
 
 describe('<App />', () => {
   it('renders correctly', () => {
-    const { getByText } = render(
-      <ReduxProvider store={store}>
-        <App />
-      </ReduxProvider>
-    );
-
-    expect(getByText('Navigation')).toBeDefined();
+    const tree = renderer.create(<App />).toJSON();
+    expect(tree).toMatchSnapshot();
   });
 });
-

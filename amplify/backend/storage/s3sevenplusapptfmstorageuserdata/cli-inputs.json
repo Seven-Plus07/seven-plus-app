@@ -1,0 +1,12 @@
+{
+  "resourceName": "s3sevenplusapptfmstorageuserdata",
+  "bucketName": "sevenplusapptfm-storage-userdata",
+  "policyUUID": "4daf4d8a",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}
