@@ -11,13 +11,17 @@ const MyCreatedLeaguesScreen = ({ navigation }) => {
 
     async function loadCreatedLeagues() {
       try {
-        const response = await Storage.get('liga-info.txt', {
-          level: 'protected',
-          contentType: 'text/plain',
-        });
+        const response = await Storage.list('liga-info.txt', { level: "protected", contentType: "text/plain" });
+
         if (response) {
-          const leagueData = JSON.parse(response);
-          setCreatedLeagues([leagueData]);
+          // response es un array de objetos que representa los objetos en tu bucket
+          // Puedes mapear esta lista para obtener los nombres de los objetos o cualquier otra información que necesites.
+          const leagueData = response.map((item) => {
+            // El nombre del objeto está en item.key
+            return { name: item.key };
+          });
+
+          setCreatedLeagues(leagueData);
         }
       } catch (error) {
         console.error('Error al cargar las ligas:', error);
