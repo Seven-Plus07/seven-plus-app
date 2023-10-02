@@ -17,10 +17,10 @@ jest.mock('@react-native-community/netinfo', () => ({
 
 import React from 'react';
 import renderer from 'react-test-renderer';
-import App from '../../App';
+import App from './App';
 
-jest.mock('../../aws-exports', () => ({}));
-jest.mock('../../Components/Navigation', () => 'Navigation');
+jest.mock('./src/aws-exports', () => ({}));
+jest.mock('./src/Components/Navigation', () => 'Navigation');
 
 
 describe('<App />', () => {
