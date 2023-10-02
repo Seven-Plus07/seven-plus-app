@@ -19,8 +19,9 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import App from '../../App';
 
-jest.mock('SevenPlusAppTfm/src/aws-exports', () => ({}));
-jest.mock('SevenPlusAppTfm/src/Components/Navigation', () => 'Navigation');
+jest.mock('../../aws-exports', () => ({}));
+jest.mock('../../Components/Navigation', () => 'Navigation');
+
 
 describe('<App />', () => {
   it('renders correctly', () => {
