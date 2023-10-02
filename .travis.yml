@@ -9,6 +9,9 @@ cache:
 
 before_install:
   - nvm install 16
+  - nvm use 16
+  - which node
+  - node -v
 
 install:
   - yarn install
