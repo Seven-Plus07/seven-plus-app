@@ -7,10 +7,12 @@ import App from './App';
 
 // Modify the mock to return a Text component with "Navigation" text
 jest.mock('./src/Components/Navigation', () => {
+  const { Text } = require('react-native');  // Importa Text dentro del mock
   return function DummyNavigation() {
     return <Text>Navigation</Text>;
   };
 });
+
 
 describe('<App />', () => {
   it('renders correctly', () => {
