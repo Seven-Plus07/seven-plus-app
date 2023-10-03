@@ -30,7 +30,7 @@
     "aws-amplify": "^5.3.11",
     "expo": "^49.0.6",
     "expo-font": "~11.4.0",
-    "expo-image-picker": "^14.3.2",
+    "expo-image-picker": "14.3.2",
     "expo-status-bar": "~1.6.0",
     "node": "^20.5.0",
     "react": "18.2.0",
@@ -46,7 +46,8 @@
     "react-native-vector-icons": "^10.0.0",
     "react-redux": "^8.1.2",
     "redux": "^4.2.1",
-    "redux-thunk": "^2.4.2"
+    "redux-thunk": "^2.4.2",
+    "styled-components": "^6.0.8"
   },
   "devDependencies": {
     "@babel/core": "^7.22.10",
