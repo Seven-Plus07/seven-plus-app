@@ -20,8 +20,9 @@ import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "react-native-image-picker";
 import { Storage } from "@aws-amplify/storage";
 import { API, graphqlOperation } from "aws-amplify";
-import { createProfile } from "./src/graphql/queries";
+import { createProfile } from '../graphql/mutations';
 import { Auth } from "aws-amplify";
+import Loader from 'react-loader-spinner';
 
 function ProfileScreen() {
   const [birthdate, setBirthdate] = useState(new Date());
@@ -45,6 +46,7 @@ function ProfileScreen() {
   }
 
   const handleSaveChanges = async () => {
+    setIsLoading(true);
     console.log("Guardando cambios...");
     console.log("Fecha de nacimiento:", birthdate);
     console.log("Rol:", role);
@@ -60,13 +62,13 @@ function ProfileScreen() {
     }
 
     const profileData = {
-      userId: userId,
+      UserID: userId,
       birthdate: birthdate.toISOString(),
-      role,
-      name,
-      lastName,
-      age: parseInt(age), // convertir a entero
-      gender,
+      Role: role,
+      Name: name,
+      LastName: lastName,
+      age: parseInt(age),
+      Sex: gender,
     };
 
     try {
@@ -74,9 +76,13 @@ function ProfileScreen() {
         graphqlOperation(createProfile, { input: profileData })
       );
       console.log("Perfil guardado en DynamoDB");
+      navigation.goBack();
     } catch (error) {
       console.error("Error al guardar el perfil en DynamoDB:", error);
     }
+   finally {
+    setIsLoading(false);  // Deja de mostrar el loader
+  }
   };
   const onChangeDate = (event, selectedDate) => {
     setShowDatePicker(false);
@@ -121,6 +127,22 @@ function ProfileScreen() {
   };
 
   return (
+    <>{isLoading && (
+      <View
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0,0,0,0.5)', // fondo semi-transparente
+        }}
+      >
+        <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+      </View>
+    )}
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -266,6 +288,7 @@ function ProfileScreen() {
         </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
+    </>
   );
 }
 
