@@ -1,3 +1,4 @@
+// Imports de React y React Native
 import React, { useState } from "react";
 import {
   View,
@@ -13,18 +14,19 @@ import {
   Image,
   Modal,
 } from "react-native";
+
+// Imports de librerías
 import DateTimePicker from "@react-native-community/datetimepicker";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { Picker } from "@react-native-picker/picker";
-//import ImagePicker from "react-native-image-picker";
 import * as ImagePicker from "react-native-image-picker";
-import { Storage } from "@aws-amplify/storage";
-import { API, graphqlOperation } from "aws-amplify";
-import { createProfile } from '../graphql/mutations';
-import { Auth } from "aws-amplify";
-import Loader from 'react-loader-spinner';
+import { Storage, API, Auth, graphqlOperation } from "aws-amplify";
 
-function ProfileScreen() {
+// Imports locales
+import { createProfile } from "../graphql/mutations";
+
+function ProfileScreen({ navigation }) {
+  // Estados del componente
   const [birthdate, setBirthdate] = useState(new Date());
   const [role, setRole] = useState("");
   const [name, setName] = useState("");
@@ -34,11 +36,13 @@ function ProfileScreen() {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [isPickerVisible, setPickerVisible] = useState(false);
   const [avatarSource, setAvatarSource] = useState(null);
+  const [position, setPosition] = useState("");
+  const [positionPickerVisible, setPositionPickerVisible] = useState(false);
 
   async function getUserId() {
     try {
       const userInfo = await Auth.currentAuthenticatedUser();
-      return userInfo.username; // Este es el ID del usuario para Cognito
+      return userInfo.username;
     } catch (error) {
       console.error("Error obteniendo el ID del usuario", error);
       return null;
@@ -46,7 +50,6 @@ function ProfileScreen() {
   }
 
   const handleSaveChanges = async () => {
-    setIsLoading(true);
     console.log("Guardando cambios...");
     console.log("Fecha de nacimiento:", birthdate);
     console.log("Rol:", role);
@@ -55,10 +58,15 @@ function ProfileScreen() {
     console.log("Edad:", age);
     console.log("Sexo:", gender);
 
+    if (role && !position) {
+      console.error("Si el rol está seleccionado, la posición es obligatoria");
+      return;
+    }
+
     const userId = await getUserId();
     if (!userId) {
-        console.error('No se pudo obtener el ID del usuario');
-        return;
+      console.error("No se pudo obtener el ID del usuario");
+      return;
     }
 
     const profileData = {
@@ -76,13 +84,10 @@ function ProfileScreen() {
         graphqlOperation(createProfile, { input: profileData })
       );
       console.log("Perfil guardado en DynamoDB");
-      navigation.goBack();
     } catch (error) {
       console.error("Error al guardar el perfil en DynamoDB:", error);
     }
-   finally {
-    setIsLoading(false);  // Deja de mostrar el loader
-  }
+    navigation.goBack();
   };
   const onChangeDate = (event, selectedDate) => {
     setShowDatePicker(false);
@@ -127,22 +132,6 @@ function ProfileScreen() {
   };
 
   return (
-    <>{isLoading && (
-      <View
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: 'rgba(0,0,0,0.5)', // fondo semi-transparente
-        }}
-      >
-        <Loader type="Puff" color="#00BFFF" height={100} width={100} />
-      </View>
-    )}
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -279,6 +268,78 @@ function ProfileScreen() {
             value={gender}
             onChangeText={setGender}
           />
+          <Text style={styles.inputLabel}>Posición</Text>
+          <TouchableOpacity
+            onPress={() => setPositionPickerVisible(true)}
+            style={styles.input}
+          >
+            <Text style={{ color: "white", textAlign: "left", marginTop: 10 }}>
+              {position ? position : "Selecciona una posición"}
+            </Text>
+          </TouchableOpacity>
+
+          {positionPickerVisible && (
+            <Modal
+              transparent={true}
+              animationType="slide"
+              visible={positionPickerVisible}
+              onRequestClose={() => setPositionPickerVisible(false)}
+            >
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  margin: 30,
+                  backgroundColor: "rgba(0, 0, 0, 0.5)",
+                }}
+              >
+                <View
+                  style={{
+                    width: "80%",
+                    backgroundColor: "#00425A",
+                    borderRadius: 10,
+                    padding: 10,
+                  }}
+                >
+                  <Picker
+                    style={{ width: "100%", color: "white" }}
+                    selectedValue={position}
+                    onValueChange={(itemValue) => {
+                      setPosition(itemValue);
+                      setPositionPickerVisible(false);
+                    }}
+                  >
+                    <Picker.Item
+                      label="Selecciona una posición"
+                      value=""
+                      color="white"
+                    />
+                    <Picker.Item
+                      label="Portero"
+                      value="Portero"
+                      color="white"
+                    />
+                    <Picker.Item
+                      label="Defensa"
+                      value="Defensa"
+                      color="white"
+                    />
+                    <Picker.Item
+                      label="Mediocampista"
+                      value="Mediocampista"
+                      color="white"
+                    />
+                    <Picker.Item
+                      label="Delantero"
+                      value="Delantero"
+                      color="white"
+                    />
+                  </Picker>
+                </View>
+              </View>
+            </Modal>
+          )}
           <TouchableOpacity
             style={styles.saveButton}
             onPress={handleSaveChanges}
@@ -288,7 +349,6 @@ function ProfileScreen() {
         </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
-    </>
   );
 }
 
