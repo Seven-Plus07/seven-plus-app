@@ -14,6 +14,19 @@
     "categories": {
       "auth": {
         "sevenplusapptfm76a956c4": {}
+      },
+      "function": {
+        "databasesevenplusapp01Triggerb546a487": {
+          "deploymentBucketName": "amplify-sevenplusapptfm-dev-195955-deployment",
+          "s3Key": "amplify-builds/databasesevenplusapp01Triggerb546a487-584867485a2f4463656b-build.zip"
+        }
+      },
+      "storage": {
+        "s3sevenplusapptfmstorageuserdata": {},
+        "databasesevenplusapp01": {}
+      },
+      "api": {
+        "sevenplusapptfm": {}
       }
     }
   }

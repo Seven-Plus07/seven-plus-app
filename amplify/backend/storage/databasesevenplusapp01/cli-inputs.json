@@ -1,0 +1,12 @@
+{
+  "resourceName": "databasesevenplusapp01",
+  "tableName": "userprofiles",
+  "partitionKey": {
+    "fieldName": "UserID",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": [
+    "databasesevenplusapp01Triggerb546a487"
+  ]
+}

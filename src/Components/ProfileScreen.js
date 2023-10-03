@@ -18,8 +18,11 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { Picker } from "@react-native-picker/picker";
 //import ImagePicker from "react-native-image-picker";
-import * as ImagePicker from 'react-native-image-picker';
+import * as ImagePicker from "react-native-image-picker";
 import { Storage } from "@aws-amplify/storage";
+import { API, graphqlOperation } from "aws-amplify";
+import { createProfile } from "./path-to-your-graphql-queries";
+import { Auth } from "aws-amplify";
 
 function ProfileScreen() {
   const [birthdate, setBirthdate] = useState(new Date());
@@ -32,6 +35,16 @@ function ProfileScreen() {
   const [isPickerVisible, setPickerVisible] = useState(false);
   const [avatarSource, setAvatarSource] = useState(null);
 
+  async function getUserId() {
+    try {
+      const userInfo = await Auth.currentAuthenticatedUser();
+      return userInfo.username; // Este es el ID del usuario para Cognito
+    } catch (error) {
+      console.error("Error obteniendo el ID del usuario", error);
+      return null;
+    }
+  }
+
   const handleSaveChanges = async () => {
     console.log("Guardando cambios...");
     console.log("Fecha de nacimiento:", birthdate);
@@ -41,24 +54,31 @@ function ProfileScreen() {
     console.log("Edad:", age);
     console.log("Sexo:", gender);
 
-    const data = {
-      Rol: role,
-      Nombre: name,
-      Apellido: lastName,
-      Edad: age,
-      Sexo: gender,
+    const userId = await getUserId();
+    if (!userId) {
+        console.error('No se pudo obtener el ID del usuario');
+        return;
+    }
+
+    const profileData = {
+      userId: userId,
+      birthdate: birthdate.toISOString(),
+      role,
+      name,
+      lastName,
+      age: parseInt(age), // convertir a entero
+      gender,
     };
 
     try {
-      await Storage.put("profile-data.txt", JSON.stringify(data), {
-        level: "protected",
-        contentType: "text/plain",
-      });
+      await API.graphql(
+        graphqlOperation(createProfile, { input: profileData })
+      );
+      console.log("Perfil guardado en DynamoDB");
     } catch (error) {
-      console.error("Error al guardar datos en S3:", error);
+      console.error("Error al guardar el perfil en DynamoDB:", error);
     }
   };
-
   const onChangeDate = (event, selectedDate) => {
     setShowDatePicker(false);
     if (selectedDate) {
