@@ -34,10 +34,6 @@ export type AmplifyDependentResourcesAttributes = {
       "PartitionKeyType": "string",
       "Region": "string",
       "StreamArn": "string"
-    },
-    "s3sevenplusapptfmstorageuserdata": {
-      "BucketName": "string",
-      "Region": "string"
     }
   }
 }

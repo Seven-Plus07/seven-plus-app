@@ -12,7 +12,6 @@ import {
   Keyboard,
   Image,
   Modal,
-  Alert, // Importa Alert
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
@@ -21,7 +20,7 @@ import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "react-native-image-picker";
 import { Storage } from "@aws-amplify/storage";
 import { API, graphqlOperation } from "aws-amplify";
-import { createProfile } from "./path-to-your-graphql-queries";
+import { createProfile } from "./src/graphql/queries";
 import { Auth } from "aws-amplify";
 
 function ProfileScreen() {

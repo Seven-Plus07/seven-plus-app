@@ -85,11 +85,6 @@
     "databasesevenplusapp01": {
       "providerPlugin": "awscloudformation",
       "service": "DynamoDB"
-    },
-    "s3sevenplusapptfmstorageuserdata": {
-      "dependsOn": [],
-      "providerPlugin": "awscloudformation",
-      "service": "S3"
     }
   }
 }
