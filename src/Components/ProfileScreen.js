@@ -96,39 +96,27 @@ function ProfileScreen({ navigation }) {
     }
   };
 
-  const selectPhotoTapped = () => {
-    const options = {
-      title: "Selecciona una foto",
-      storageOptions: {
-        skipBackup: true,
-        path: "images",
-      },
-    };
+  const fetchProfileImage = async (fileName) => {
+    try {
+      const imageUrl = await Storage.get(fileName);
+      console.log(imageUrl);
+      // Aquí puedes actualizar el estado de tu componente con la URL para mostrar la imagen en tu UI
+    } catch (error) {
+      console.error('Error al obtener la imagen:', error);
+    }
+  };
 
-    ImagePicker.launchImageLibrary(options, async (response) => {
-      if (response.didCancel) {
-        console.log("Usuario canceló la selección de imagen");
-      } else if (response.error) {
-        console.log("Error al seleccionar imagen: ", response.error);
-      } else {
-        const { uri } = response;
-        const fileName = `profile-${Date.now()}.jpg`;
 
-        try {
-          const result = await Storage.put(fileName, uri, {
-            level: "protected",
-            contentType: "image/jpeg",
-          });
-
-          const source = { uri: uri };
-          setAvatarSource(source);
-
-          console.log("Imagen almacenada en S3 con éxito:", result.key);
-        } catch (error) {
-          console.error("Error al subir imagen a S3:", error);
-        }
-      }
-    });
+  const uploadProfileImage = async (file) => {
+    try {
+      const result = await Storage.put(file.name, file, {
+        contentType: "image/jpeg", // o 'image/png' dependiendo del tipo de imagen
+      });
+      console.log(result);
+      alert("Imagen cargada exitosamente");
+    } catch (error) {
+      console.error("Error al cargar la imagen:", error);
+    }
   };
 
   return (
@@ -143,6 +131,15 @@ function ProfileScreen({ navigation }) {
           contentContainerStyle={styles.container}
           keyboardShouldPersistTaps="handled"
         >
+          <input
+            type="file"
+            onChange={(e) => {
+              if (e.target.files.length > 0) {
+                uploadProfileImage(e.target.files[0]);
+              }
+            }}
+          />
+          <img src={imageUrl} alt="Foto de perfil" />
           <TouchableOpacity onPress={selectPhotoTapped}>
             {avatarSource === null ? (
               <FontAwesome5 name="user-circle" size={80} color="white" />

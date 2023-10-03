@@ -18,6 +18,13 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "function": {
+    "S3Triggerc726240e": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "databasesevenplusapp01Triggerb546a487": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
@@ -34,6 +41,10 @@ export type AmplifyDependentResourcesAttributes = {
       "PartitionKeyType": "string",
       "Region": "string",
       "StreamArn": "string"
+    },
+    "s3defotodeperfil": {
+      "BucketName": "string",
+      "Region": "string"
     }
   }
 }

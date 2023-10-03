@@ -46,6 +46,11 @@
     }
   },
   "function": {
+    "S3Triggerc726240e": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "databasesevenplusapp01Triggerb546a487": {
       "build": true,
       "dependsOn": [
@@ -63,28 +68,25 @@
       "service": "Lambda"
     }
   },
-  "parameters": {
-    "AMPLIFY_function_databasesevenplusapp01Triggerb546a487_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "databasesevenplusapp01Triggerb546a487"
-        }
-      ]
-    },
-    "AMPLIFY_function_databasesevenplusapp01Triggerb546a487_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "databasesevenplusapp01Triggerb546a487"
-        }
-      ]
-    }
-  },
   "storage": {
     "databasesevenplusapp01": {
       "providerPlugin": "awscloudformation",
       "service": "DynamoDB"
+    },
+    "s3defotodeperfil": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "LambdaExecutionRole"
+          ],
+          "category": "function",
+          "resourceName": "S3Triggerc726240e"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "S3"
     }
   }
 }
