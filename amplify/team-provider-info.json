@@ -19,7 +19,8 @@
         "databasesevenplusapp01Triggerb546a487": {
           "deploymentBucketName": "amplify-sevenplusapptfm-dev-195955-deployment",
           "s3Key": "amplify-builds/databasesevenplusapp01Triggerb546a487-4767314e457833556269-build.zip"
-        }
+        },
+        "S3Triggerc726240e": {}
       },
       "storage": {
         "s3sevenplusapptfmstorageuserdata": {},
