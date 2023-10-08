@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import logoImage from 'SevenPlusAppTfm/assets/logo.png';
+import logoImage from '../../assets/logo.png';
 import { Auth } from 'aws-amplify';
 
 function LoginScreen({ navigation }) {

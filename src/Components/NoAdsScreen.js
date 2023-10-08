@@ -30,7 +30,7 @@ const NoAdsScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('SevenPlusAppTfm/assets/NoAds.png')} style={styles.image} />
+      <Image source={require('../../assets/NoAds.png')} style={styles.image} />
       <Text style={styles.description}>
         Disfruta de la aplicación sin anuncios molestos
       </Text>

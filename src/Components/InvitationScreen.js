@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert, Platform, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import InviteImage from 'SevenPlusAppTfm/assets/Invite.png'
+import InviteImage from '../../assets/Invite.png'
 
 const InvitationScreen = () => {
   const [email, setEmail] = useState('');

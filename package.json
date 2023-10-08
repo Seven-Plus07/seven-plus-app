@@ -14,7 +14,7 @@
     "@aws-amplify/ui-react": "^5.3.1",
     "@babel/plugin-proposal-optional-chaining": "^7.21.4-esm.4",
     "@babel/plugin-transform-arrow-functions": "^8.0.0-alpha.3",
-    "@babel/plugin-transform-shorthand-properties": "^8.0.0-alpha.3",
+    "@babel/plugin-transform-shorthand-properties": "^7.22.5",
     "@babel/plugin-transform-template-literals": "^8.0.0-alpha.3",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",

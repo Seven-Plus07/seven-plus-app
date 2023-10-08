@@ -2878,13 +2878,6 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.22.5"
 
-"@babel/plugin-transform-shorthand-properties@^8.0.0-alpha.3":
-  version "8.0.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-shorthand-properties/-/plugin-transform-shorthand-properties-8.0.0-alpha.3.tgz#ea41f0c3446b303bdc42deb04d23375c9efea4bc"
-  integrity sha512-xhf4+vQqXawZ3FR4gDhbyqpApntHOdayfK3Wx589pcpVnMoV8Tv11n1Xudzlav3UxKpOANhXc92lXtrJqCga/g==
-  dependencies:
-    "@babel/helper-plugin-utils" "^8.0.0-alpha.3"
-
 "@babel/plugin-transform-spread@^7.0.0", "@babel/plugin-transform-spread@^7.22.5":
   version "7.22.5"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-spread/-/plugin-transform-spread-7.22.5.tgz#6487fd29f229c95e284ba6c98d65eafb893fea6b"

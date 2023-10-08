@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import cupImage from 'SevenPlusAppTfm/assets/cup.png'
+import cupImage from '../../assets/cup.png';
 import MyLeague from './MyLeague';
-
-
 
 const MyLeaguesScreen = ({ navigation }) => {
   const [hasLeague, setHasLeague] = useState(false); // Asume que no hay liga creada al inicio
