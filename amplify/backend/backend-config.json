@@ -68,6 +68,24 @@
       "service": "Lambda"
     }
   },
+  "parameters": {
+    "AMPLIFY_function_databasesevenplusapp01Triggerb546a487_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "databasesevenplusapp01Triggerb546a487"
+        }
+      ]
+    },
+    "AMPLIFY_function_databasesevenplusapp01Triggerb546a487_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "databasesevenplusapp01Triggerb546a487"
+        }
+      ]
+    }
+  },
   "storage": {
     "databasesevenplusapp01": {
       "providerPlugin": "awscloudformation",

@@ -11,15 +11,15 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
-  Image,
   Modal,
+  Image,
 } from "react-native";
 
 // Imports de librerías
 import DateTimePicker from "@react-native-community/datetimepicker";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { Picker } from "@react-native-picker/picker";
-import * as ImagePicker from "react-native-image-picker";
+import  * as ImagePicker from 'react-native-image-picker';
 import { Storage, API, Auth, graphqlOperation } from "aws-amplify";
 
 // Imports locales
@@ -35,9 +35,10 @@ function ProfileScreen({ navigation }) {
   const [gender, setGender] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [isPickerVisible, setPickerVisible] = useState(false);
-  const [avatarSource, setAvatarSource] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
   const [position, setPosition] = useState("");
   const [positionPickerVisible, setPositionPickerVisible] = useState(false);
+  const placeholderLogo = "https://via.placeholder.com/150";
 
   async function getUserId() {
     try {
@@ -96,22 +97,39 @@ function ProfileScreen({ navigation }) {
     }
   };
 
-  const fetchProfileImage = async (fileName) => {
-    try {
-      const imageUrl = await Storage.get(fileName);
-      console.log(imageUrl);
-      // Aquí puedes actualizar el estado de tu componente con la URL para mostrar la imagen en tu UI
-    } catch (error) {
-      console.error('Error al obtener la imagen:', error);
-    }
-  };
+  const selectImage = () => {
+    alert('Seleccionar imagen desde cámara o biblioteca');
+    const options = {
+      title: "Selecciona una opción",
+      customButtons: [],
+      storageOptions: {
+        skipBackup: true,
+        path: "images",
+      },
+    };
 
+    ImagePicker.launchImageLibrary(options, (response) => {
+      console.log("Response = ", response);
+
+      if (response.didCancel) {
+        console.log("El usuario canceló la selección de imagen");
+      } else if (response.error) {
+        console.log("ImagePicker Error: ", response.error);
+      } else if (response.customButton) {
+        console.log("User tapped custom button: ", response.customButton);
+      } else {
+        // Aquí guardas la URI de la imagen en tu estado
+        setImageUrl(response.uri);
+      }
+    });
+  };
 
   const uploadProfileImage = async (file) => {
     try {
       const result = await Storage.put(file.name, file, {
         contentType: "image/jpeg", // o 'image/png' dependiendo del tipo de imagen
       });
+      setImageUrl(nuevaUrl);
       console.log(result);
       alert("Imagen cargada exitosamente");
     } catch (error) {
@@ -131,7 +149,7 @@ function ProfileScreen({ navigation }) {
           contentContainerStyle={styles.container}
           keyboardShouldPersistTaps="handled"
         >
-          <input
+          <TextInput
             type="file"
             onChange={(e) => {
               if (e.target.files.length > 0) {
@@ -139,21 +157,11 @@ function ProfileScreen({ navigation }) {
               }
             }}
           />
-          <img src={imageUrl} alt="Foto de perfil" />
-          <TouchableOpacity onPress={selectPhotoTapped}>
-            {avatarSource === null ? (
-              <FontAwesome5 name="user-circle" size={80} color="white" />
-            ) : (
-              <View style={styles.avatarContainer}>
-                <Image style={styles.avatar} source={avatarSource} />
-                <FontAwesome5
-                  name="camera"
-                  size={20}
-                  color="white"
-                  style={styles.cameraIcon}
-                />
-              </View>
-            )}
+          <TouchableOpacity onPress={selectImage}>
+            <Image
+              source={imageUrl ? { uri: imageUrl } : { uri: placeholderLogo }}
+              style={{ width: 150, height: 150 }}
+            />
           </TouchableOpacity>
           <Text style={styles.header}>Mi Perfil</Text>
           <View style={styles.dateContainer}>
