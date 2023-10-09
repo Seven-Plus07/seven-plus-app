@@ -6,6 +6,7 @@ module.exports = function(api) {
       'react-native-reanimated/plugin',
       '@babel/plugin-transform-optional-chaining',
       '@babel/plugin-transform-class-properties',
+      '@babel/plugin-transform-nullish-coalescing-operator',
     ]
   };
 };

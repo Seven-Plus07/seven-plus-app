@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^5.3.1",
-    "@babel/plugin-proposal-optional-chaining": "^7.21.4-esm.4",
     "@babel/plugin-transform-arrow-functions": "7.0.0",
     "@babel/plugin-transform-class-properties": "^7.22.5",
+    "@babel/plugin-transform-nullish-coalescing-operator": "^7.22.11",
     "@babel/plugin-transform-optional-chaining": "^7.23.0",
     "@babel/plugin-transform-shorthand-properties": "^7.22.5",
     "@babel/plugin-transform-template-literals": "7.0.0",
@@ -27,7 +27,7 @@
     "@react-native-community/netinfo": "9.3.10",
     "@react-native-masked-view/masked-view": "^0.2.9",
     "@react-native-picker/picker": "2.4.10",
-    "@react-navigation/drawer": "^6.6.3",
+    "@react-navigation/drawer": "^6.6.4",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/stack": "^6.3.17",
     "@reduxjs/toolkit": "^1.9.5",
@@ -60,7 +60,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.22.10",
-    "@babel/plugin-transform-nullish-coalescing-operator": "^7.22.11",
     "@babel/preset-env": "^7.22.20",
     "@babel/preset-flow": "^7.22.5",
     "@babel/preset-react": "^7.22.15",
