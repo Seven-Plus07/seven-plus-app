@@ -22,7 +22,7 @@
         },
         "S3Triggerc726240e": {
           "deploymentBucketName": "amplify-sevenplusapptfm-dev-195955-deployment",
-          "s3Key": "amplify-builds/S3Triggerc726240e-516f7444685170747132-build.zip"
+          "s3Key": "amplify-builds/S3Triggerc726240e-41674654326532375659-build.zip"
         }
       },
       "storage": {
