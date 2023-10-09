@@ -69,6 +69,22 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_S3Triggerc726240e_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "S3Triggerc726240e"
+        }
+      ]
+    },
+    "AMPLIFY_function_S3Triggerc726240e_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "S3Triggerc726240e"
+        }
+      ]
+    },
     "AMPLIFY_function_databasesevenplusapp01Triggerb546a487_deploymentBucketName": {
       "usedBy": [
         {

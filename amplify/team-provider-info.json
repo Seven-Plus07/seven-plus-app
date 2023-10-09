@@ -20,11 +20,15 @@
           "deploymentBucketName": "amplify-sevenplusapptfm-dev-195955-deployment",
           "s3Key": "amplify-builds/databasesevenplusapp01Triggerb546a487-4767314e457833556269-build.zip"
         },
-        "S3Triggerc726240e": {}
+        "S3Triggerc726240e": {
+          "deploymentBucketName": "amplify-sevenplusapptfm-dev-195955-deployment",
+          "s3Key": "amplify-builds/S3Triggerc726240e-516f7444685170747132-build.zip"
+        }
       },
       "storage": {
         "s3sevenplusapptfmstorageuserdata": {},
-        "databasesevenplusapp01": {}
+        "databasesevenplusapp01": {},
+        "s3defotodeperfil": {}
       },
       "api": {
         "sevenplusapptfm": {}
