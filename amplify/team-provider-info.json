@@ -18,11 +18,11 @@
       "function": {
         "databasesevenplusapp01Triggerb546a487": {
           "deploymentBucketName": "amplify-sevenplusapptfm-dev-195955-deployment",
-          "s3Key": "amplify-builds/databasesevenplusapp01Triggerb546a487-4767314e457833556269-build.zip"
+          "s3Key": "amplify-builds/databasesevenplusapp01Triggerb546a487-6953696974307a42464b-build.zip"
         },
         "S3Triggerc726240e": {
           "deploymentBucketName": "amplify-sevenplusapptfm-dev-195955-deployment",
-          "s3Key": "amplify-builds/S3Triggerc726240e-41674654326532375659-build.zip"
+          "s3Key": "amplify-builds/S3Triggerc726240e-594b5a4d30647a593471-build.zip"
         }
       },
       "storage": {
