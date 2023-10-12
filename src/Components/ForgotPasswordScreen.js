@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
-import ForgotPasswordImage from 'SevenPlusAppTfm/assets/ForgotPassword.png'
+import ForgotPasswordImage from '../../assets/ForgotPassword.png'
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 

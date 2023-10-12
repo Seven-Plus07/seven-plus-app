@@ -1,3 +1,4 @@
+// Imports de React y React Native
 import React, { useState } from "react";
 import {
   View,
@@ -10,18 +11,22 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
-  Image,
   Modal,
-  Alert, // Importa Alert
+  Image,
 } from "react-native";
+
+// Imports de librerías
 import DateTimePicker from "@react-native-community/datetimepicker";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { Picker } from "@react-native-picker/picker";
-//import ImagePicker from "react-native-image-picker";
-import * as ImagePicker from 'react-native-image-picker';
-import { Storage } from "@aws-amplify/storage";
+import  * as ImagePicker from 'react-native-image-picker';
+import { Storage, API, Auth, graphqlOperation } from "aws-amplify";
 
-function ProfileScreen() {
+// Imports locales
+import { createProfile } from "../graphql/mutations";
+
+function ProfileScreen({ navigation }) {
+  // Estados del componente
   const [birthdate, setBirthdate] = useState(new Date());
   const [role, setRole] = useState("");
   const [name, setName] = useState("");
@@ -30,7 +35,20 @@ function ProfileScreen() {
   const [gender, setGender] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [isPickerVisible, setPickerVisible] = useState(false);
-  const [avatarSource, setAvatarSource] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
+  const [position, setPosition] = useState("");
+  const [positionPickerVisible, setPositionPickerVisible] = useState(false);
+  const placeholderLogo = "https://via.placeholder.com/150";
+
+  async function getUserId() {
+    try {
+      const userInfo = await Auth.currentAuthenticatedUser();
+      return userInfo.username;
+    } catch (error) {
+      console.error("Error obteniendo el ID del usuario", error);
+      return null;
+    }
+  }
 
   const handleSaveChanges = async () => {
     console.log("Guardando cambios...");
@@ -41,24 +59,37 @@ function ProfileScreen() {
     console.log("Edad:", age);
     console.log("Sexo:", gender);
 
-    const data = {
-      Rol: role,
-      Nombre: name,
-      Apellido: lastName,
-      Edad: age,
-      Sexo: gender,
+    if (role && !position) {
+      console.error("Si el rol está seleccionado, la posición es obligatoria");
+      return;
+    }
+
+    const userId = await getUserId();
+    if (!userId) {
+      console.error("No se pudo obtener el ID del usuario");
+      return;
+    }
+
+    const profileData = {
+      UserID: userId,
+      birthdate: birthdate.toISOString(),
+      Role: role,
+      Name: name,
+      LastName: lastName,
+      age: parseInt(age),
+      Sex: gender,
     };
 
     try {
-      await Storage.put("profile-data.txt", JSON.stringify(data), {
-        level: "protected",
-        contentType: "text/plain",
-      });
+      await API.graphql(
+        graphqlOperation(createProfile, { input: profileData })
+      );
+      console.log("Perfil guardado en DynamoDB");
     } catch (error) {
-      console.error("Error al guardar datos en S3:", error);
+      console.error("Error al guardar el perfil en DynamoDB:", error);
     }
+    navigation.goBack();
   };
-
   const onChangeDate = (event, selectedDate) => {
     setShowDatePicker(false);
     if (selectedDate) {
@@ -66,39 +97,44 @@ function ProfileScreen() {
     }
   };
 
-  const selectPhotoTapped = () => {
+  const selectImage = () => {
+    alert('Seleccionar imagen desde cámara o biblioteca');
     const options = {
-      title: "Selecciona una foto",
+      title: "Selecciona una opción",
+      customButtons: [],
       storageOptions: {
         skipBackup: true,
         path: "images",
       },
     };
 
-    ImagePicker.launchImageLibrary(options, async (response) => {
+    ImagePicker.launchImageLibrary(options, (response) => {
+      console.log("Response = ", response);
+
       if (response.didCancel) {
-        console.log("Usuario canceló la selección de imagen");
+        console.log("El usuario canceló la selección de imagen");
       } else if (response.error) {
-        console.log("Error al seleccionar imagen: ", response.error);
+        console.log("ImagePicker Error: ", response.error);
+      } else if (response.customButton) {
+        console.log("User tapped custom button: ", response.customButton);
       } else {
-        const { uri } = response;
-        const fileName = `profile-${Date.now()}.jpg`;
-
-        try {
-          const result = await Storage.put(fileName, uri, {
-            level: "protected",
-            contentType: "image/jpeg",
-          });
-
-          const source = { uri: uri };
-          setAvatarSource(source);
-
-          console.log("Imagen almacenada en S3 con éxito:", result.key);
-        } catch (error) {
-          console.error("Error al subir imagen a S3:", error);
-        }
+        // Aquí guardas la URI de la imagen en tu estado
+        setImageUrl(response.uri);
       }
     });
+  };
+
+  const uploadProfileImage = async (file) => {
+    try {
+      const result = await Storage.put(file.name, file, {
+        contentType: "image/jpeg", // o 'image/png' dependiendo del tipo de imagen
+      });
+      setImageUrl(nuevaUrl);
+      console.log(result);
+      alert("Imagen cargada exitosamente");
+    } catch (error) {
+      console.error("Error al cargar la imagen:", error);
+    }
   };
 
   return (
@@ -113,20 +149,19 @@ function ProfileScreen() {
           contentContainerStyle={styles.container}
           keyboardShouldPersistTaps="handled"
         >
-          <TouchableOpacity onPress={selectPhotoTapped}>
-            {avatarSource === null ? (
-              <FontAwesome5 name="user-circle" size={80} color="white" />
-            ) : (
-              <View style={styles.avatarContainer}>
-                <Image style={styles.avatar} source={avatarSource} />
-                <FontAwesome5
-                  name="camera"
-                  size={20}
-                  color="white"
-                  style={styles.cameraIcon}
-                />
-              </View>
-            )}
+          <TextInput
+            type="file"
+            onChange={(e) => {
+              if (e.target.files.length > 0) {
+                uploadProfileImage(e.target.files[0]);
+              }
+            }}
+          />
+          <TouchableOpacity onPress={selectImage}>
+            <Image
+              source={imageUrl ? { uri: imageUrl } : { uri: placeholderLogo }}
+              style={{ width: 150, height: 150 }}
+            />
           </TouchableOpacity>
           <Text style={styles.header}>Mi Perfil</Text>
           <View style={styles.dateContainer}>
@@ -238,6 +273,78 @@ function ProfileScreen() {
             value={gender}
             onChangeText={setGender}
           />
+          <Text style={styles.inputLabel}>Posición</Text>
+          <TouchableOpacity
+            onPress={() => setPositionPickerVisible(true)}
+            style={styles.input}
+          >
+            <Text style={{ color: "white", textAlign: "left", marginTop: 10 }}>
+              {position ? position : "Selecciona una posición"}
+            </Text>
+          </TouchableOpacity>
+
+          {positionPickerVisible && (
+            <Modal
+              transparent={true}
+              animationType="slide"
+              visible={positionPickerVisible}
+              onRequestClose={() => setPositionPickerVisible(false)}
+            >
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  margin: 30,
+                  backgroundColor: "rgba(0, 0, 0, 0.5)",
+                }}
+              >
+                <View
+                  style={{
+                    width: "80%",
+                    backgroundColor: "#00425A",
+                    borderRadius: 10,
+                    padding: 10,
+                  }}
+                >
+                  <Picker
+                    style={{ width: "100%", color: "white" }}
+                    selectedValue={position}
+                    onValueChange={(itemValue) => {
+                      setPosition(itemValue);
+                      setPositionPickerVisible(false);
+                    }}
+                  >
+                    <Picker.Item
+                      label="Selecciona una posición"
+                      value=""
+                      color="white"
+                    />
+                    <Picker.Item
+                      label="Portero"
+                      value="Portero"
+                      color="white"
+                    />
+                    <Picker.Item
+                      label="Defensa"
+                      value="Defensa"
+                      color="white"
+                    />
+                    <Picker.Item
+                      label="Mediocampista"
+                      value="Mediocampista"
+                      color="white"
+                    />
+                    <Picker.Item
+                      label="Delantero"
+                      value="Delantero"
+                      color="white"
+                    />
+                  </Picker>
+                </View>
+              </View>
+            </Modal>
+          )}
           <TouchableOpacity
             style={styles.saveButton}
             onPress={handleSaveChanges}

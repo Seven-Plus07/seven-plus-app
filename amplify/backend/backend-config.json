@@ -1,4 +1,22 @@
 {
+  "api": {
+    "sevenplusapptfm": {
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [],
+          "defaultAuthentication": {
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7
+            },
+            "authenticationType": "API_KEY"
+          }
+        }
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync"
+    }
+  },
   "auth": {
     "sevenplusapptfm76a956c4": {
       "customAuth": false,
@@ -27,9 +45,80 @@
       "service": "Cognito"
     }
   },
+  "function": {
+    "S3Triggerc726240e": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "databasesevenplusapp01Triggerb546a487": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "databasesevenplusapp01"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_S3Triggerc726240e_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "S3Triggerc726240e"
+        }
+      ]
+    },
+    "AMPLIFY_function_S3Triggerc726240e_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "S3Triggerc726240e"
+        }
+      ]
+    },
+    "AMPLIFY_function_databasesevenplusapp01Triggerb546a487_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "databasesevenplusapp01Triggerb546a487"
+        }
+      ]
+    },
+    "AMPLIFY_function_databasesevenplusapp01Triggerb546a487_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "databasesevenplusapp01Triggerb546a487"
+        }
+      ]
+    }
+  },
   "storage": {
-    "s3sevenplusapptfmstorageuserdata": {
-      "dependsOn": [],
+    "databasesevenplusapp01": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    },
+    "s3defotodeperfil": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "LambdaExecutionRole"
+          ],
+          "category": "function",
+          "resourceName": "S3Triggerc726240e"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "S3"
     }

@@ -3,8 +3,6 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, TouchableWi
 import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Auth } from 'aws-amplify';
-import { useNavigation } from '@react-navigation/native';
-
 
 function RegisterScreen({navigation}) {
   const [email, setEmail] = useState('');

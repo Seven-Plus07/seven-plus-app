@@ -29,7 +29,7 @@ const SubscriptionScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('SevenPlusAppTfm/assets/Premium.png')} style={styles.image} />
+      <Image source={require('../../assets/Premium.png')} style={styles.image} />
       <Text style={styles.description}>
         Con Seven Plus Premium, puedes crear ligas, administrar inscripciones de equipos, ingresar estadísticas, y disfrutar de muchas funcionalidades más. ¡Eleva tu experiencia al siguiente nivel!
       </Text>

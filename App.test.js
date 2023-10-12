@@ -22,6 +22,7 @@ import App from './App';
 jest.mock('./src/aws-exports', () => ({}));
 jest.mock('./src/Components/Navigation', () => 'Navigation');
 
+
 describe('<App />', () => {
   it('renders correctly', () => {
     const tree = renderer.create(<App />).toJSON();
