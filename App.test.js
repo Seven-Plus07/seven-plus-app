@@ -19,7 +19,6 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import App from './App';
 
-jest.mock('./src/aws-exports', () => ({}));
 jest.mock('./src/Components/Navigation', () => 'Navigation');
 
 
