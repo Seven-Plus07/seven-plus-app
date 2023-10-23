@@ -1,4 +1,3 @@
-// Imports de React y React Native
 import React, { useState } from "react";
 import {
   View,
@@ -14,19 +13,14 @@ import {
   Modal,
   Image,
 } from "react-native";
-
-// Imports de librerías
 import DateTimePicker from "@react-native-community/datetimepicker";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { Picker } from "@react-native-picker/picker";
-import  * as ImagePicker from 'react-native-image-picker';
+import * as ImagePicker from 'react-native-image-picker';
 import { Storage, API, Auth, graphqlOperation } from "aws-amplify";
-
-// Imports locales
 import { createProfile } from "../graphql/mutations";
 
 function ProfileScreen({ navigation }) {
-  // Estados del componente
   const [birthdate, setBirthdate] = useState(new Date());
   const [role, setRole] = useState("");
   const [name, setName] = useState("");
@@ -39,6 +33,12 @@ function ProfileScreen({ navigation }) {
   const [position, setPosition] = useState("");
   const [positionPickerVisible, setPositionPickerVisible] = useState(false);
   const placeholderLogo = "https://via.placeholder.com/150";
+  const [primaryPosition, setPrimaryPosition] = useState("");
+  const [secondaryPosition, setSecondaryPosition] = useState("");
+  const [tertiaryPosition, setTertiaryPosition] = useState("");
+  const [skilledLeg, setSkilledLeg] = useState("");
+  const [team, setTeam] = useState("");
+  const [playerNumber, setPlayerNumber] = useState("");
 
   async function getUserId() {
     try {
@@ -51,14 +51,6 @@ function ProfileScreen({ navigation }) {
   }
 
   const handleSaveChanges = async () => {
-    console.log("Guardando cambios...");
-    console.log("Fecha de nacimiento:", birthdate);
-    console.log("Rol:", role);
-    console.log("Nombre:", name);
-    console.log("Apellido:", lastName);
-    console.log("Edad:", age);
-    console.log("Sexo:", gender);
-
     if (role && !position) {
       console.error("Si el rol está seleccionado, la posición es obligatoria");
       return;
@@ -90,6 +82,7 @@ function ProfileScreen({ navigation }) {
     }
     navigation.goBack();
   };
+
   const onChangeDate = (event, selectedDate) => {
     setShowDatePicker(false);
     if (selectedDate) {
@@ -98,7 +91,6 @@ function ProfileScreen({ navigation }) {
   };
 
   const selectImage = () => {
-    alert('Seleccionar imagen desde cámara o biblioteca');
     const options = {
       title: "Selecciona una opción",
       customButtons: [],
@@ -109,8 +101,6 @@ function ProfileScreen({ navigation }) {
     };
 
     ImagePicker.launchImageLibrary(options, (response) => {
-      console.log("Response = ", response);
-
       if (response.didCancel) {
         console.log("El usuario canceló la selección de imagen");
       } else if (response.error) {
@@ -118,7 +108,6 @@ function ProfileScreen({ navigation }) {
       } else if (response.customButton) {
         console.log("User tapped custom button: ", response.customButton);
       } else {
-        // Aquí guardas la URI de la imagen en tu estado
         setImageUrl(response.uri);
       }
     });
@@ -138,7 +127,7 @@ function ProfileScreen({ navigation }) {
   };
 
   return (
-    <KeyboardAvoidingView
+<KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
@@ -266,85 +255,60 @@ function ProfileScreen({ navigation }) {
             value={age}
             onChangeText={setAge}
           />
-          <Text style={styles.inputLabel}>Sexo</Text>
+          <Text style={styles.inputLabel}>Género</Text>
           <TextInput
             style={styles.input}
-            placeholder="Sexo"
+            placeholder="Género"
             value={gender}
             onChangeText={setGender}
           />
-          <Text style={styles.inputLabel}>Posición</Text>
-          <TouchableOpacity
-            onPress={() => setPositionPickerVisible(true)}
+                    <Text style={styles.inputLabel}>Posición Primaria</Text>
+          <TextInput
             style={styles.input}
-          >
-            <Text style={{ color: "white", textAlign: "left", marginTop: 10 }}>
-              {position ? position : "Selecciona una posición"}
-            </Text>
-          </TouchableOpacity>
+            placeholder="Posición Primaria"
+            value={primaryPosition}
+            onChangeText={setPrimaryPosition}
+          />
 
-          {positionPickerVisible && (
-            <Modal
-              transparent={true}
-              animationType="slide"
-              visible={positionPickerVisible}
-              onRequestClose={() => setPositionPickerVisible(false)}
-            >
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  margin: 30,
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                }}
-              >
-                <View
-                  style={{
-                    width: "80%",
-                    backgroundColor: "#00425A",
-                    borderRadius: 10,
-                    padding: 10,
-                  }}
-                >
-                  <Picker
-                    style={{ width: "100%", color: "white" }}
-                    selectedValue={position}
-                    onValueChange={(itemValue) => {
-                      setPosition(itemValue);
-                      setPositionPickerVisible(false);
-                    }}
-                  >
-                    <Picker.Item
-                      label="Selecciona una posición"
-                      value=""
-                      color="white"
-                    />
-                    <Picker.Item
-                      label="Portero"
-                      value="Portero"
-                      color="white"
-                    />
-                    <Picker.Item
-                      label="Defensa"
-                      value="Defensa"
-                      color="white"
-                    />
-                    <Picker.Item
-                      label="Mediocampista"
-                      value="Mediocampista"
-                      color="white"
-                    />
-                    <Picker.Item
-                      label="Delantero"
-                      value="Delantero"
-                      color="white"
-                    />
-                  </Picker>
-                </View>
-              </View>
-            </Modal>
-          )}
+          <Text style={styles.inputLabel}>Posición Secundaria</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Posición Secundaria"
+            value={secondaryPosition}
+            onChangeText={setSecondaryPosition}
+          />
+
+          <Text style={styles.inputLabel}>Posición Terciaria</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Posición Terciaria"
+            value={tertiaryPosition}
+            onChangeText={setTertiaryPosition}
+          />
+
+          <Text style={styles.inputLabel}>Pierna Hábil</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Pierna Hábil"
+            value={skilledLeg}
+            onChangeText={setSkilledLeg}
+          />
+
+          <Text style={styles.inputLabel}>Equipo</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Equipo"
+            value={team}
+            onChangeText={setTeam}
+          />
+
+          <Text style={styles.inputLabel}>Número de Jugador</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Número de Jugador"
+            value={playerNumber}
+            onChangeText={setPlayerNumber}
+          />
           <TouchableOpacity
             style={styles.saveButton}
             onPress={handleSaveChanges}

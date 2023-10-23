@@ -1,5 +1,17 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, TouchableWithoutFeedback, Keyboard, Platform, StatusBar } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Platform,
+  StatusBar,
+  Slider,
+} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Auth } from 'aws-amplify';
@@ -11,21 +23,26 @@ function RegisterScreen({ navigation }) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [birthdate, setBirthdate] = useState(null);
-  const minDate = new Date();
-  const maxDate = new Date();
-  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [age, setAge] = useState(0);
+  const [gender, setGender] = useState('femenino');
+  const [isCustomGender, setIsCustomGender] = useState(false);
+  const [customGender, setCustomGender] = useState('');
+  const [username, setUsername] = useState('');
 
+  const minDate = new Date();
   minDate.setFullYear(minDate.getFullYear() - 100);
+
+  const maxDate = new Date();
   maxDate.setFullYear(maxDate.getFullYear() - 12);
 
   const toggleDatePicker = () => {
-    setShowDatePicker((prevState) => !prevState);
+    setShowDatePicker(!showDatePicker);
   };
 
   const handleDateChange = (event, selectedDate) => {
     if (selectedDate) {
       setBirthdate(selectedDate);
-      setShowDatePicker(false); // Ocultar el calendario después de seleccionar una fecha
+      setShowDatePicker(false);
     }
   };
 
@@ -33,9 +50,8 @@ function RegisterScreen({ navigation }) {
     navigation.goBack();
   };
 
-
   const handleRegister = async () => {
-    const hasNumber = /\d/.test(password); // Arregla el nombre de la variable
+    const hasNumber = /\d/.test(password);
     const hasSpecialCharacter = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password);
 
     if (!email || !password || !confirmPassword || !firstName || !lastName || !birthdate) {
@@ -73,6 +89,9 @@ function RegisterScreen({ navigation }) {
           given_name: firstName,
           family_name: lastName,
           birthdate: birthdate.toISOString().split('T')[0],
+          'custom:age': age.toString(),
+          'custom:gender': gender,
+          'custom:username': username,
         },
 
       })
@@ -84,7 +103,7 @@ function RegisterScreen({ navigation }) {
       console.log('Fecha de nacimiento:', birthdate);
       console.log('Correo electrónico:', email);
       console.log('Contraseña:', password);
-      console.log( Auth.configure() )
+      console.log(Auth.configure())
     } catch (error) {
       console.error('Error registrando al usuario:', error);
       Alert.alert('Error', error.message);
@@ -94,9 +113,9 @@ function RegisterScreen({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-      <TouchableOpacity onPress={handleBackPress} style={styles.backButton}>
-        <FontAwesome5 name="chevron-left" size={24} color="#FFF" />
-      </TouchableOpacity>
+        <TouchableOpacity onPress={handleBackPress} style={styles.backButton}>
+          <FontAwesome5 name="chevron-left" size={24} color="#FFF" />
+        </TouchableOpacity>
         <Text style={styles.logo}>SevenPlus - Registro</Text>
         <Text style={styles.subtitle}>Nombre</Text>
         <TextInput
@@ -114,6 +133,15 @@ function RegisterScreen({ navigation }) {
           value={lastName}
           onChangeText={setLastName}
           autoCapitalize="words"
+        />
+
+        <Text style={styles.subtitle}>Nombre de Usuario</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Nombre de Usuario"
+          value={username}
+          onChangeText={setUsername}
+          autoCapitalize="none"
         />
 
         <TouchableOpacity style={styles.dateContainer} onPress={toggleDatePicker}>
@@ -163,6 +191,46 @@ function RegisterScreen({ navigation }) {
           onChangeText={setConfirmPassword}
           autoCapitalize="none"
         />
+        
+        <Text style={styles.subtitle}>Edad: {age}</Text>
+        <Slider
+          style={{ width: '100%', height: 40 }}
+          minimumValue={0}
+          maximumValue={100}
+          step={1}
+          value={age}
+          onValueChange={(value) => setAge(value)}
+        />
+
+        <Text style={styles.subtitle}>Género</Text>
+        <Picker
+          selectedValue={isCustomGender ? 'personalizado' : gender}
+          onValueChange={(itemValue) => {
+            if (itemValue === 'personalizado') {
+              setIsCustomGender(true);
+            } else {
+              setIsCustomGender(false);
+              setGender(itemValue);
+            }
+          }}
+        >
+          <Picker.Item label="Femenino" value="femenino" />
+          <Picker.Item label="Masculino" value="masculino" />
+          <Picker.Item label="Personalizado" value="personalizado" />
+        </Picker>
+
+        {isCustomGender && (
+          <View>
+            <Text style={styles.subtitle}>Género Personalizado</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Género Personalizado"
+              value={customGender}
+              onChangeText={setCustomGender}
+              autoCapitalize="none"
+            />
+          </View>
+        )}
 
         <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
           <Text style={styles.registerText}>Registrarse</Text>
@@ -170,72 +238,72 @@ function RegisterScreen({ navigation }) {
       </View>
     </TouchableWithoutFeedback>
   );
-  }
+}
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#00425A',
-      paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 70,
-      paddingHorizontal: 20,
-    },
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#00425A',
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 70,
+    paddingHorizontal: 20,
+  },
 
-    logo: {
-      fontSize: 24,
-      fontWeight: 'bold',
-      color: 'white',
-      textAlign: 'left',
-      marginBottom: 14,
-    },
-    subtitle: {
-      fontSize: 18,
-      fontWeight: 'bold',
-      color: 'white',
-      textAlign: 'left',
-      marginBottom: 12,
-    },
-    input: {
-      width: '100%',
-      height: 50,
-      borderWidth: 1,
-      borderColor: '#BFDB38',
-      borderRadius: 8,
-      marginBottom: 16,
-      paddingHorizontal: 12,
-      color: 'white',
-    },
-    registerButton: {
-      backgroundColor: '#FD2525',
-      width: '100%',
-      height: 50,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: 8,
-    },
-    registerText: {
-      color: 'white',
-      fontSize: 18,
-      fontWeight: 'bold',
-    },
-    dateContainer: {
-      width: '100%',
-      height: 50,
-      borderWidth: 1,
-      borderColor: '#BFDB38',
-      borderRadius: 8,
-      marginBottom: 16,
-      paddingHorizontal: 12,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    },
-    dateText: {
-      fontSize: 16,
-      color: 'white',
-    },
-    icon: {
-      color: 'white',
-    },
-  });
+  logo: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign: 'left',
+    marginBottom: 14,
+  },
+  subtitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign: 'left',
+    marginBottom: 12,
+  },
+  input: {
+    width: '100%',
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#BFDB38',
+    borderRadius: 8,
+    marginBottom: 16,
+    paddingHorizontal: 12,
+    color: 'white',
+  },
+  registerButton: {
+    backgroundColor: '#FD2525',
+    width: '100%',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+  },
+  registerText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  dateContainer: {
+    width: '100%',
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#BFDB38',
+    borderRadius: 8,
+    marginBottom: 16,
+    paddingHorizontal: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  dateText: {
+    fontSize: 16,
+    color: 'white',
+  },
+  icon: {
+    color: 'white',
+  },
+});
 
-  export default RegisterScreen;
+export default RegisterScreen;
