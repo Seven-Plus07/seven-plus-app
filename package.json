@@ -80,6 +80,10 @@
     },
     "transformIgnorePatterns": [
       "node_modules/(?!react-native|@react-native-community|@react-navigation|@react-native)"
+    ],
+    "modulePaths": [
+      "<rootDir>",
+      "<rootDir>/src"
     ]
   },
   "private": true

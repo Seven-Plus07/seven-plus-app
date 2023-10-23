@@ -1,13 +1,3 @@
-// Mock de aws-amplify
-jest.mock('aws-amplify', () => ({
-  Amplify: {
-    Logger: {
-      LOG_LEVEL: 'DEBUG',
-    },
-    configure: jest.fn(),
-  },
-}));
-
 // Mock de @react-native-community/netinfo
 jest.mock('@react-native-community/netinfo', () => ({
   fetch: jest.fn(() => Promise.resolve({
