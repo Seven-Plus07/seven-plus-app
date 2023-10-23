@@ -2,15 +2,15 @@ name: Nodo CI
 language: node_js
 dist: focal
 node_js:
-  - "18"  # Cambiado de 16 a 18
+  - "18"
 
 cache:
   directories:
     - node_modules
 
 before_install:
-  - nvm install 18  # Cambiado de 16 a 18
-  - nvm use 18      # Cambiado de 16 a 18
+  - nvm install 18
+  - nvm use 18
   - which node
   - node -v
 

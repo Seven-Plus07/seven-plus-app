@@ -17,7 +17,7 @@ jest.mock('@react-native-community/netinfo', () => ({
 
 import React from 'react';
 import renderer from 'react-test-renderer';
-import App from './App';
+import App from '../App';
 
 jest.mock('./src/aws-exports', () => ({}));
 jest.mock('./src/Components/Navigation', () => 'Navigation');
