@@ -18,7 +18,7 @@ install:
   - yarn install
 
 script:
-  - yarn test
+  - yarn jest --clearCache
 
 notifications:
   email:
