@@ -18,7 +18,7 @@ install:
   - yarn install
 
 script:
-  - yarn test
+  - yarn test --reset-cache
 
 notifications:
   email:
