@@ -3,10 +3,7 @@ name: Travis CI
 language: node_js
 node_js:
   - 18
-
 dist: focal
-node_js:
-  - "18"
 
 cache:
   yarn: true

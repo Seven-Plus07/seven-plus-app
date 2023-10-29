@@ -39,7 +39,7 @@ function RegisterScreen({ navigation }) {
     const hasSpecialCharacter = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password);
 
     if (!email || !password || !confirmPassword || !firstName || !lastName || !birthdate) {
-      Alert.alert('Error', 'Por favor, complete todos los campos');
+      Alert.alert('Error', 'Por favor, completar todos los campos');
       return;
     }
 
@@ -61,7 +61,7 @@ function RegisterScreen({ navigation }) {
     const birthdateDate = new Date(birthdate);
     const age = new Date().getFullYear() - birthdateDate.getFullYear();
     if (age < 12 || age > 100) {
-      Alert.alert('Error', 'La edad debe estar entre 12 y 100 años');
+      Alert.alert('Error', 'La edad debe estar entre 11 y 100 años');
       return;
     }
 
@@ -154,7 +154,7 @@ function RegisterScreen({ navigation }) {
           autoCapitalize="none"
         />
 
-        <Text style={styles.subtitle}>Repite contraseña</Text>
+        <Text style={styles.subtitle}>Repite la contraseña</Text>
         <TextInput
           style={styles.input}
           placeholder="Repetir contraseña"
