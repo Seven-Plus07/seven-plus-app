@@ -1,16 +1,21 @@
-name: Nodo CI
+name: Travis CI
+
 language: node_js
+node_js:
+  - 18
+
 dist: focal
 node_js:
-  - "18"  # Cambiado de 16 a 18
+  - "18"
 
 cache:
+  yarn: true
   directories:
     - node_modules
 
 before_install:
-  - nvm install 18  # Cambiado de 16 a 18
-  - nvm use 18      # Cambiado de 16 a 18
+  - nvm install 18
+  - nvm use 18
   - which node
   - node -v
 
@@ -18,18 +23,22 @@ install:
   - yarn install
 
 script:
-  - yarn jest --clearCache
+  - yarn test --clearCache
+  - yarn lint
 
 notifications:
   email:
     recipients:
       - mireya08.jav@gmail.com
-    on_success: change
+    on_success: never
     on_failure: always
 
 after_success:
   - echo "Tests passed successfully!"
-after_failure:
-  - echo "Tests failed."
 
-
+deploy:
+  provider: script
+  script: amplify publish
+  skip_cleanup: true
+  on:
+    branch: main
