@@ -25,7 +25,7 @@ function RegisterScreen({ navigation }) {
   const handleDateChange = (event, selectedDate) => {
     if (selectedDate) {
       setBirthdate(selectedDate);
-      setShowDatePicker(false); // Ocultar el calendario después de seleccionar una fecha
+      setShowDatePicker(false);
     }
   };
 
@@ -35,7 +35,7 @@ function RegisterScreen({ navigation }) {
 
 
   const handleRegister = async () => {
-    const hasNumber = /\d/.test(password); // Arregla el nombre de la variable
+    const hasNumber = /\d/.test(password);
     const hasSpecialCharacter = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password);
 
     if (!email || !password || !confirmPassword || !firstName || !lastName || !birthdate) {
