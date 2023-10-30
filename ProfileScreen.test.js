@@ -14,8 +14,7 @@ describe('ProfileScreen', () => {
     API.graphql.mockReturnValue(Promise.resolve({ data: { createProfile: {} } }));
     graphqlOperation.mockReturnValue({});
     API.graphql.mockImplementation(createProfileMock);
-
-    // Renderiza el componente
+    
     const { getByText, getByPlaceholderText } = render(<ProfileScreen />);
 
     // Simula cambios en los campos de entrada y selecciona una imagen

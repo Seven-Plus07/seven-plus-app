@@ -10,7 +10,6 @@ describe('LoginScreen', () => {
     const signInMock = jest.fn();
     Auth.signIn.mockImplementation(signInMock);
 
-    // Se renderiza el componente
     const { getByText, getByPlaceholderText } = render(<LoginScreen />);
 
     // Esta parte simula cambios en los campos de entrada
