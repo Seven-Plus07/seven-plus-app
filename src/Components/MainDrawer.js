@@ -1,6 +1,5 @@
 // Se importan las ventanas necesarias
 import { createDrawerNavigator } from '@react-navigation/drawer';
-
 import MyLeaguesScreen from './MyLeaguesScreen';
 import ProfileScreen from './ProfileScreen';
 import StoreScreen from './StoreScreen';
@@ -32,7 +31,7 @@ function MainDrawer() {
         <Drawer.Screen name="Premium" component={PremiumAccessScreen} />
         <Drawer.Screen name="Registro de Equipos" component={TeamRegistration} />
         <Drawer.Screen name="Tienda" component={StoreScreen} />
-        <Drawer.Screen name="Invitar amigos" component={InvitationScreen} />
+        <Drawer.Screen name="Invita a tus amigos" component={InvitationScreen} />
         <Drawer.Screen name="Configuración" component={SettingsScreen} />
       </Drawer.Navigator>
     );

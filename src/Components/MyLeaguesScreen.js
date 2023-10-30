@@ -17,7 +17,6 @@ const MyLeaguesScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.menuIcon} onPress={handleMenuPress}>
-        {/* Aquí puedes agregar el icono de menú */}
       </TouchableOpacity>
       <Text style={styles.headerText}>Seven Plus</Text>
       <Text style={styles.subHeaderText}>Mis Ligas</Text>
