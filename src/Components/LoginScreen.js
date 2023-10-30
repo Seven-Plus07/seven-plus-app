@@ -14,7 +14,7 @@ function LoginScreen({ navigation }) {
 
   const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert('Error', 'Por favor, complete todos los campos');
+      Alert.alert('Error', 'Por favor, completa todos los campos');
       return;
     }
 
@@ -31,7 +31,7 @@ function LoginScreen({ navigation }) {
       navigation.navigate('MainApp');
     } catch (error) {
       console.error('Error signing in', error);
-      setErrorMessage('Correo electrónico o contraseña incorrectos');
+      setErrorMessage('Correo electrónico y/o contraseña incorrectos');
     }
   };
 
