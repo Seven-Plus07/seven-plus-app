@@ -266,7 +266,7 @@ function ProfileScreen({ navigation }) {
             value={age}
             onChangeText={setAge}
           />
-          <Text style={styles.inputLabel}>Sexo</Text>
+          <Text style={styles.inputLabel}>Género</Text>
           <TextInput
             style={styles.input}
             placeholder="Sexo"
