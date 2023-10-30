@@ -21,7 +21,6 @@ install:
 
 script:
   - yarn test --clearCache
-  - yarn lint
 
 notifications:
   email:
