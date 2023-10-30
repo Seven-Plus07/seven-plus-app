@@ -1,4 +1,4 @@
-// Mock de @react-native-community/netinfo
+// Se describe el Mock de @react-native-community/netinfo
 jest.mock('@react-native-community/netinfo', () => ({
   fetch: jest.fn(() => Promise.resolve({
     isConnected: true,
