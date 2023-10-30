@@ -32,9 +32,3 @@ notifications:
 after_success:
   - echo "Tests passed successfully!"
 
-deploy:
-  provider: script
-  script: amplify publish
-  skip_cleanup: true
-  on:
-    branch: main
