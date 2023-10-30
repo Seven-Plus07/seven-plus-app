@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
-import RegisterScreen from './RegisterScreen';
+import RegisterScreen from './src/Components/RegisterScreen';
 import { Auth } from 'aws-amplify'; 
 
 jest.mock('aws-amplify'); // Mock de aws-amplify
