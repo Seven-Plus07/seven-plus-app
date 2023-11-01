@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react-native';
 import RegisterScreen from './src/Components/RegisterScreen';
 import { Auth } from 'aws-amplify'; 
 
-jest.mock('aws-amplify'); // Mock de aws-amplify
+jest.mock('aws-amplify'); 
 
 describe('RegisterScreen', () => {
   it('handles registration correctly', async () => {
@@ -23,7 +23,7 @@ describe('RegisterScreen', () => {
     fireEvent.changeText(passwordInput, 'Password123');
     fireEvent.changeText(confirmPasswordInput, 'Password123');
 
-    // Simula el clic en el botón de registro
+    // Simulamos el clic en el botón de registro
     const registerButton = getByText('Registrarse');
     fireEvent.press(registerButton);
 

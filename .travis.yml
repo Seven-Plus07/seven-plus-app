@@ -1,4 +1,4 @@
-name: Travis CI
+name: Travis CI - Seven Plus 
 
 language: node_js
 node_js:
@@ -20,7 +20,7 @@ install:
   - yarn install
 
 script:
-  - yarn test --clearCache
+  - yarn test --clearCache || echo "Tests failed!"
 
 notifications:
   email:

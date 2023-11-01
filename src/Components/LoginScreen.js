@@ -24,7 +24,7 @@ function LoginScreen({ navigation }) {
       return; // Detener el proceso de inicio de sesión
     }
 
-    // Verificar credenciales con la función ficticia de autenticación
+    // Verificar credenciales con AWS Amplfy
     try {
       await Auth.signIn(email, password);
       setErrorMessage('');
