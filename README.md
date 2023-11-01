@@ -26,7 +26,6 @@ npm install --global yarn
 
 4. Inicia el servidor de desarrollo de React Native.
 ```bash
-# usando Yarn
 yarn start
 ```
 
