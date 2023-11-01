@@ -10,49 +10,41 @@ SevenPlusApp es una aplicación móvil desarrollada en React Native para la crea
 
 ## Capturas de Pantalla
 
-_Capturas de la app_
+![Login](https://github.com/Seven-Plus07/seven-plus-app/assets/129245409/52859a91-fbf3-41fc-870d-55b7fcc64b06)
+
 
 ## Instalación
 
 1. Clona este repositorio en tu máquina local.
-
-git clone  https://github.com/Seven-Plus07/SevenPlusAppTfm.git
+```bash
+gh repo clone Seven-Plus07/seven-plus-app
+```
 
 2. Instala las dependencias necesarias.
-cd SevenPlusApp
-npm install
+```bash
+cd seven-plus-app
+npm install --global yarn
+```
 
 3. Inicia el servidor de desarrollo de React Native.
 ```bash
-# usando npm
-npm start
-
-# O usando Yarn
 yarn start
 ```
 
-3. Inicializa la aplicación
+4. Inicializa la aplicación
 ### For Android
 
 ```bash
-# using npm
-npm run android
-
-# OR using Yarn
 yarn android
 ```
 
 ### For iOS
 
 ```bash
-# using npm
-npm run ios
-
-# OR using Yarn
 yarn ios
 ```
 
-4. Escanea el código QR con la aplicación Expo Go en tu dispositivo móvil o utiliza un emulador para probar la aplicación.
+5. Escanea el código QR con la aplicación Expo Go en tu dispositivo móvil o utiliza un emulador para probar la aplicación.
 
 ## Contribución
 
@@ -60,7 +52,7 @@ Las contribuciones son bienvenidas. Si encuentras algún problema o tienes una i
 
 ## Licencia
 
-Este proyecto está bajo la Licencia MIT. Puedes encontrar más detalles en el archivo `LICENSE`.
+N/A
 
 ## Contacto
 
