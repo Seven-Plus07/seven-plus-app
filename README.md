@@ -22,7 +22,7 @@ gh repo clone Seven-Plus07/seven-plus-app
 
 2. Instala las dependencias necesarias.
 ```bash
-cd SevenPlusApp
+cd seven-plus-app
 npm install --global yarn
 ```
 
