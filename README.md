@@ -26,12 +26,12 @@ cd seven-plus-app
 npm install --global yarn
 ```
 
-4. Inicia el servidor de desarrollo de React Native.
+3. Inicia el servidor de desarrollo de React Native.
 ```bash
 yarn start
 ```
 
-3. Inicializa la aplicación
+4. Inicializa la aplicación
 ### For Android
 
 ```bash
@@ -44,7 +44,7 @@ yarn android
 yarn ios
 ```
 
-4. Escanea el código QR con la aplicación Expo Go en tu dispositivo móvil o utiliza un emulador para probar la aplicación.
+5. Escanea el código QR con la aplicación Expo Go en tu dispositivo móvil o utiliza un emulador para probar la aplicación.
 
 ## Contribución
 
