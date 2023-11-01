@@ -16,13 +16,15 @@ SevenPlusApp es una aplicación móvil desarrollada en React Native para la crea
 ## Instalación
 
 1. Clona este repositorio en tu máquina local.
-
+```bash
 gh repo clone Seven-Plus07/seven-plus-app
+```
 
 2. Instala las dependencias necesarias.
+```bash
 cd SevenPlusApp
 npm install --global yarn
-
+```
 
 4. Inicia el servidor de desarrollo de React Native.
 ```bash
