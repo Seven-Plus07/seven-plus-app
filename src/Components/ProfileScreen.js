@@ -213,11 +213,7 @@ function ProfileScreen({ navigation }) {
                       value=""
                       color="white"
                     />
-                    <Picker.Item
-                      label="Jugador"
-                      value="Jugador"
-                      color="white"
-                    />
+                    <Picker.Item label="Jugador" value="Jugador" color="white"/>
                     <Picker.Item label="DT" value="DT" color="white" />
                     <Picker.Item label="Veedor" value="Veedor" color="white" />
                     <Picker.Item label="Arbitro" value="Arbitro" color="white" />
