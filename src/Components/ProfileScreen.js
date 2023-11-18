@@ -220,6 +220,7 @@ function ProfileScreen({ navigation }) {
                     />
                     <Picker.Item label="DT" value="DT" color="white" />
                     <Picker.Item label="Veedor" value="Veedor" color="white" />
+                    <Picker.Item label="Arbitro" value="Arbitro" color="white" />
                   </Picker>
                 </View>
               </View>

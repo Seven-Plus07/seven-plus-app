@@ -7,7 +7,7 @@ const AddPlayer = ({route, navigation}) => {
     const [searchQuery, setSearchQuery] = useState('');
     const users = [
         "Usuario 1", "Usuario 2", "Usuario 3", "Usuario 4", "Usuario 5",
-        "Usuario 6", "Usuario 7", "Usuario 8", "Usuario 9", "Usuario 10"
+        "Usuario 6", "Usuario 11", "Usuario 8", "Usuario 9", "Usuario 10"
     ];
     const [filteredUsers, setFilteredUsers] = useState(users);
 
