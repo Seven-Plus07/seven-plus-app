@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     resizeMode: 'center',
   },
   title: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: 'bold',
     marginBottom: 20,
     color: 'white',
